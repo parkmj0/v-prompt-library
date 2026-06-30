@@ -72,8 +72,10 @@
   --text-caption: var(--text-caption);
 
   /* ── 폰트 ── */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans:
+    "Pretendard", var(--font-inter), -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
 body {
