@@ -8,11 +8,9 @@ const AWARD_STYLE: Record<string, string> = {
   대상: "bg-award-special-bg text-award-special-text border-award-special-border",
   Best: "bg-award-gold-bg text-award-gold-text border-award-gold-border",
   참신상:
-    "bg-award-silver-bg text-award-silver-text border-award-silver-border",
+    "bg-award-commend-bg text-award-commend-text border-award-commend-border",
   운영특별상:
     "bg-award-bronze-bg text-award-bronze-text border-award-bronze-border",
-  추천작:
-    "bg-award-commend-bg text-award-commend-text border-award-commend-border",
 };
 
 const VARIANT_STYLE: Record<string, string> = {

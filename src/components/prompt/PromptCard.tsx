@@ -80,12 +80,14 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
           <span className="text-4xl select-none">{meta.icon}</span>
         )}
 
-        {/* 수상 배지 — 좌상단 오버레이 */}
-        <div className="absolute top-2 left-2 opacity-80">
-          <Badge variant="award" value={entry.award}>
-            {entry.award}
-          </Badge>
-        </div>
+        {/* 수상 배지 — 좌상단 오버레이 (추천작 제외) */}
+        {entry.award !== "추천작" && (
+          <div className="absolute top-2 left-2 opacity-80">
+            <Badge variant="award" value={entry.award}>
+              {entry.award}
+            </Badge>
+          </div>
+        )}
       </div>
 
       {/* 본문 */}

@@ -91,9 +91,11 @@ export function PromptDetailPanel({
       <div className="px-lg pt-sm pb-lg border-b border-hairline flex flex-col gap-sm">
         {/* 배지 */}
         <div className="flex flex-wrap gap-1">
-          <Badge variant="award" value={entry.award}>
-            {entry.award}
-          </Badge>
+          {entry.award !== "추천작" && (
+            <Badge variant="award" value={entry.award}>
+              {entry.award}
+            </Badge>
+          )}
           <Badge variant="category">{entry.category}</Badge>
         </div>
 
@@ -273,6 +275,11 @@ export function PromptDetailPanel({
 
       {/* ── 업무 상황 + 최종 제출 Prompt ────────────────── */}
       <div className="px-lg py-md flex flex-col gap-md border-b border-hairline">
+        {(entry.cell || entry.submitter) && (
+          <p className="text-caption text-subtle">
+            {[entry.cell, entry.submitter].filter(Boolean).join(" · ")}
+          </p>
+        )}
         {entry.usage && (
           <div>
             <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
@@ -308,24 +315,6 @@ export function PromptDetailPanel({
           <p className="text-sm text-body leading-body">
             {entry.effect || entry.usage}
           </p>
-        </div>
-      )}
-
-      {/* ── Cell / 제출자 ─────────────────────────────── */}
-      {(entry.cell || entry.submitter) && (
-        <div className="px-lg py-md border-b border-hairline flex flex-col gap-xs">
-          {entry.cell && (
-            <div className="grid grid-cols-[76px_1fr] gap-xs">
-              <span className="text-caption text-subtle">Cell</span>
-              <span className="text-sm text-body">{entry.cell}</span>
-            </div>
-          )}
-          {entry.submitter && (
-            <div className="grid grid-cols-[76px_1fr] gap-xs">
-              <span className="text-caption text-subtle">제출자</span>
-              <span className="text-sm text-body">{entry.submitter}</span>
-            </div>
-          )}
         </div>
       )}
     </aside>
