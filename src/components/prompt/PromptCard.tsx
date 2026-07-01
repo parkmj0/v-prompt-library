@@ -10,15 +10,6 @@ const CATEGORY_META: Record<string, { icon: string; bg: string }> = {
   "기획/검토": { icon: "🔍", bg: "bg-category-plan" },
 };
 
-const RESULT_TYPE_ICON: Record<string, string> = {
-  image: "🖼",
-  pdf: "📄",
-  docx: "📝",
-  pptx: "📊",
-  xlsx: "📋",
-  video: "🎥",
-};
-
 interface PromptCardProps {
   entry: PromptEntry;
   isSelected: boolean;
@@ -57,9 +48,11 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
         ) : (
           <span className="text-4xl select-none">{meta.icon}</span>
         )}
-        <span className="absolute top-2 right-2 text-micro bg-canvas/90 backdrop-blur rounded-xs px-1.5 py-0.5 text-muted font-medium">
-          {RESULT_TYPE_ICON[entry.resultType]} {entry.resultType.toUpperCase()}
-        </span>
+        {entry.aiTools[0] && (
+          <span className="absolute top-2 right-2 text-micro bg-canvas/90 backdrop-blur rounded-xs px-1.5 py-0.5 text-muted font-medium">
+            {entry.aiTools[0]}
+          </span>
+        )}
       </div>
 
       {/* Content */}
@@ -71,7 +64,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
           <Badge variant="category">{entry.category}</Badge>
         </div>
 
-        <h2 className="text-sm font-semibold text-ink line-clamp-2 leading-snug">
+        <h2 className="text-base font-semibold text-ink line-clamp-2 leading-snug">
           {entry.title}
         </h2>
 

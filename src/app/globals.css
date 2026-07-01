@@ -5,6 +5,7 @@
   /* ── 색상 토큰 ── */
   --color-primary: var(--color-primary);
   --color-primary-active: var(--color-primary-active);
+  --color-primary-soft: var(--color-primary-soft);
   --color-primary-disabled: var(--color-primary-disabled);
   --color-ink: var(--color-ink);
   --color-body: var(--color-body);

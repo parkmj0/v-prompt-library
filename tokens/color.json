@@ -2,6 +2,7 @@
   "color": {
     "primary": { "value": "#111111", "type": "color" },
     "primary-active": { "value": "#242424", "type": "color" },
+    "primary-soft": { "value": "#808080", "type": "color" },
     "primary-disabled": { "value": "#e5e7eb", "type": "color" },
     "ink": { "value": "#111111", "type": "color" },
     "body": { "value": "#374151", "type": "color" },

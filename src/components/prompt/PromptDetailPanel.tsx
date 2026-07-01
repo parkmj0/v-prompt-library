@@ -20,11 +20,10 @@ interface PromptDetailPanelProps {
 }
 
 function PropertyRow({ label, value }: { label: string; value: string }) {
-  if (!value) return null;
   return (
     <div className="grid grid-cols-[80px_1fr] items-baseline gap-xs">
       <span className="text-caption text-subtle shrink-0">{label}</span>
-      <span className="text-sm text-body">{value}</span>
+      <span className="text-sm text-body">{value || "—"}</span>
     </div>
   );
 }
@@ -136,52 +135,51 @@ export function PromptDetailPanel({
             </pre>
             <button
               onClick={handleCopy}
-              className="absolute top-sm right-sm opacity-0 group-hover:opacity-100 transition-opacity bg-canvas border border-hairline text-caption font-medium text-muted px-sm py-xxs rounded-md shadow-sm hover:bg-surface-card"
+              className="absolute top-sm right-sm opacity-0 group-hover:opacity-100 transition-opacity bg-primary-soft text-on-primary text-xs font-medium px-sm py-xxs rounded-md hover:bg-primary-active"
             >
-              {copied ? "✓ 복사됨" : "복사"}
+              {copied ? "✓ Copied" : "Copy"}
             </button>
           </div>
         </div>
 
-        {/* 활용 AI */}
-        {entry.aiTools.length > 0 && (
-          <div className="px-lg py-md border-b border-hairline">
-            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
-              활용 AI
-            </p>
-            <div className="flex flex-wrap gap-1">
+        {/* 활용 AI · 결과 링크 · 활용 방법 */}
+        <div className="px-lg py-md border-b border-hairline flex flex-col gap-sm">
+          {entry.aiTools.length > 0 && (
+            <div className="flex items-center gap-xs flex-wrap">
+              <span className="text-caption font-semibold text-subtle uppercase tracking-normal shrink-0">
+                활용 AI
+              </span>
               {entry.aiTools.map((tool) => (
                 <Badge key={tool} variant="tool">
                   {tool}
                 </Badge>
               ))}
             </div>
-          </div>
-        )}
-
-        {/* 결과 링크 */}
-        {entry.resultFileUrl && (
-          <div className="px-lg py-md border-b border-hairline">
-            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
-              결과 링크
+          )}
+          {entry.resultFileUrl && (
+            <div className="flex items-center gap-xs flex-wrap">
+              <span className="text-caption font-semibold text-subtle uppercase tracking-normal shrink-0">
+                결과 링크
+              </span>
+              <a
+                href={entry.resultFileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-caption text-accent hover:underline truncate"
+              >
+                {entry.resultFileUrl}
+              </a>
+            </div>
+          )}
+          <div>
+            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
+              활용 방법
             </p>
-            <a
-              href={entry.resultFileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-xs text-sm font-medium text-accent hover:underline"
-            >
-              결과물 보기 →
-            </a>
+            {entry.effect && (
+              <p className="text-sm text-body leading-body">{entry.effect}</p>
+            )}
           </div>
-        )}
-
-        {/* 활용 방법 */}
-        {entry.effect && (
-          <div className="px-lg py-md border-b border-hairline">
-            <Section label="활용 방법" value={entry.effect} />
-          </div>
-        )}
+        </div>
 
         {/* 태그 */}
         {entry.tags.length > 0 && (

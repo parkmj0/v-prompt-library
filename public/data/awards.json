@@ -10,6 +10,7 @@
     "aiTool": "Chat GPT",
     "usage": "동일 업무를 하는 구성원에게 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
+    "resultFileUrl": "https://example.com/result/award-001.pdf",
     "tags": ["콘텐츠 기획", "콘텐츠 제작", "Chat GPT"]
   },
   {
