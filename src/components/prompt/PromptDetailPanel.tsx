@@ -119,26 +119,25 @@ export function PromptDetailPanel({
         </div>
 
         {/* 업무 상황 + Prompt 제목 */}
+        {/* 업무 유형 · 업무 상황 · 최종 Prompt */}
         <div className="px-lg py-md flex flex-col gap-md border-b border-hairline">
+          <Section label="업무 유형" value={entry.category} />
           <Section label="업무 상황" value={entry.usage} />
-          <Section label="Prompt 제목" value={entry.promptSummary} />
-        </div>
-
-        {/* 최종 제출 Prompt */}
-        <div className="px-lg py-md border-b border-hairline">
-          <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
-            최종 제출 Prompt
-          </p>
-          <div className="group relative">
-            <pre className="text-xs text-muted bg-surface-soft border border-hairline rounded-lg p-md whitespace-pre-wrap font-mono leading-body">
-              {entry.promptText}
-            </pre>
-            <button
-              onClick={handleCopy}
-              className="absolute top-sm right-sm opacity-0 group-hover:opacity-100 transition-opacity bg-primary-soft text-on-primary text-xs font-medium px-sm py-xxs rounded-md hover:bg-primary-active"
-            >
-              {copied ? "✓ Copied" : "Copy"}
-            </button>
+          <div>
+            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
+              최종 제출 Prompt
+            </p>
+            <div className="group relative">
+              <pre className="text-xs text-muted bg-surface-soft border border-hairline rounded-lg p-md whitespace-pre-wrap font-mono leading-body">
+                {entry.promptText}
+              </pre>
+              <button
+                onClick={handleCopy}
+                className="absolute top-sm right-sm opacity-0 group-hover:opacity-100 transition-opacity bg-primary-soft text-on-primary text-xs font-medium px-sm py-xxs rounded-md hover:bg-primary-active"
+              >
+                {copied ? "✓ Copied" : "Copy"}
+              </button>
+            </div>
           </div>
         </div>
 
