@@ -112,6 +112,10 @@ body {
   color: var(--color-ink);
 }
 
+button {
+  cursor: pointer;
+}
+
 @keyframes panel-slide-in {
   from {
     opacity: 0;
