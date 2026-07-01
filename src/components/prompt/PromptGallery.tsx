@@ -101,11 +101,10 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
 
   // 5개 조건 AND 필터 + 정렬 (추천작 상단)
   const AWARD_SORT: Record<string, number> = {
-    추천작: 0,
-    운영특별상: 1,
+    대상: 0,
+    Best: 1,
     참신상: 2,
-    Best: 3,
-    대상: 4,
+    운영특별상: 3,
   };
 
   const filtered = useMemo(() => {
