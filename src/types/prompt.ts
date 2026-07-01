@@ -1,4 +1,4 @@
-export type AwardLabel = "대상" | "금상" | "은상" | "동상" | "추천작";
+export type AwardLabel = "대상" | "Best" | "참신상" | "운영특별상" | "추천작";
 export type ResultType = "image" | "pdf" | "docx" | "pptx" | "xlsx" | "video";
 export type Category =
   | "개발/자동화"

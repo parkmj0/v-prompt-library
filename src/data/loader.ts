@@ -32,9 +32,9 @@ interface RawEntry {
 
 function deriveAward(no: number): AwardLabel {
   if (no === 1) return "대상";
-  if (no <= 3) return "금상";
-  if (no <= 5) return "은상";
-  if (no <= 7) return "동상";
+  if (no <= 3) return "Best";
+  if (no <= 5) return "참신상";
+  if (no <= 7) return "운영특별상";
   return "추천작";
 }
 

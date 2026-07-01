@@ -14,7 +14,7 @@ const CATEGORIES: { value: string; label: string }[] = [
   { value: "기획/검토", label: "기획/검토" },
 ];
 
-const AWARD_FILTERS = ["수상 전체", "Best", "참신성", "운영특별상"];
+const AWARD_FILTERS = ["수상 전체", "Best", "참신상", "운영특별상"];
 const AI_FILTERS = ["AI 전체", "ChatGPT", "Claude", "Gemini"];
 const DIFFICULTY_FILTERS = [
   "난이도 전체",
@@ -99,7 +99,15 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
     );
   }, [entries, searchQuery]);
 
-  // 5개 조건 AND 필터
+  // 5개 조건 AND 필터 + 정렬 (추천작 상단)
+  const AWARD_SORT: Record<string, number> = {
+    추천작: 0,
+    운영특별상: 1,
+    참신상: 2,
+    Best: 3,
+    대상: 4,
+  };
+
   const filtered = useMemo(() => {
     return searchFiltered
       .filter((e) => activeCategory === "전체" || e.category === activeCategory)
@@ -113,6 +121,9 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
         (e) =>
           difficultyFilter === "난이도 전체" ||
           e.repeatType === difficultyFilter,
+      )
+      .sort(
+        (a, b) => (AWARD_SORT[a.award] ?? 99) - (AWARD_SORT[b.award] ?? 99),
       );
   }, [searchFiltered, activeCategory, awardFilter, aiFilter, difficultyFilter]);
 
@@ -212,64 +223,70 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
           </div>
 
           {/* 2단: 상세 필터 칩 */}
-          <div className="flex items-center gap-xs overflow-x-auto py-sm mb-lg">
-            {/* 수상 필터 */}
-            {AWARD_FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setAwardFilter(f);
-                }}
-                className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
-                  awardFilter === f
-                    ? "bg-primary text-on-primary"
-                    : "bg-surface-card text-muted hover:bg-surface-strong"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-xs py-sm mb-lg">
+            {/* 수상 그룹 */}
+            <div className="flex items-center gap-[3px]">
+              {AWARD_FILTERS.map((f) => (
+                <button
+                  key={f}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAwardFilter(f);
+                  }}
+                  className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
+                    awardFilter === f
+                      ? "bg-primary text-on-primary"
+                      : "bg-surface-card text-muted hover:bg-surface-strong"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
 
-            <span className="flex-shrink-0 w-px h-4 bg-hairline mx-xxs" />
+            <span className="flex-shrink-0 w-px h-4 bg-hairline" />
 
-            {/* AI 필터 */}
-            {AI_FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setAiFilter(f);
-                }}
-                className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
-                  aiFilter === f
-                    ? "bg-primary text-on-primary"
-                    : "bg-surface-card text-muted hover:bg-surface-strong"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+            {/* AI 그룹 */}
+            <div className="flex items-center gap-[3px]">
+              {AI_FILTERS.map((f) => (
+                <button
+                  key={f}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setAiFilter(f);
+                  }}
+                  className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
+                    aiFilter === f
+                      ? "bg-primary text-on-primary"
+                      : "bg-surface-card text-muted hover:bg-surface-strong"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
 
-            <span className="flex-shrink-0 w-px h-4 bg-hairline mx-xxs" />
+            <span className="flex-shrink-0 w-px h-4 bg-hairline" />
 
-            {/* 난이도 필터 */}
-            {DIFFICULTY_FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDifficultyFilter(f);
-                }}
-                className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
-                  difficultyFilter === f
-                    ? "bg-primary text-on-primary"
-                    : "bg-surface-card text-muted hover:bg-surface-strong"
-                }`}
-              >
-                {f}
-              </button>
-            ))}
+            {/* 난이도 그룹 */}
+            <div className="flex items-center gap-[3px]">
+              {DIFFICULTY_FILTERS.map((f) => (
+                <button
+                  key={f}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDifficultyFilter(f);
+                  }}
+                  className={`flex-shrink-0 px-sm py-xxs rounded-pill text-xs font-medium whitespace-nowrap transition-colors ${
+                    difficultyFilter === f
+                      ? "bg-primary text-on-primary"
+                      : "bg-surface-card text-muted hover:bg-surface-strong"
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
 
             <span className="ml-auto flex-shrink-0 text-sm text-subtle whitespace-nowrap pl-md">
               {isSearching
@@ -303,7 +320,9 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
       {/* 패널 래퍼 */}
       <div
         className={`sticky top-0 h-screen flex-shrink-0 overflow-hidden border-l border-hairline bg-canvas ${
-          !isDragging ? "transition-[width] duration-300 ease-out" : ""
+          !isDragging
+            ? "transition-[width] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            : ""
         }`}
         style={{ width: panelOpen ? panelWidth : 0 }}
       >
