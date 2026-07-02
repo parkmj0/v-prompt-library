@@ -2,6 +2,7 @@
   "name": "v-promp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://parkmj0.github.io/v-prompt-library",
   "scripts": {
     "dev": "next dev",
     "build": "npm run build:tokens && next build",
@@ -10,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "build:tokens": "node style-dictionary.config.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "next": "16.2.9",
