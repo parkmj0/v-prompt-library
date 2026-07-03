@@ -10,8 +10,11 @@
     "aiTool": "Chat GPT",
     "usage": "동일 업무를 하는 구성원에게 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "resultFileUrl": "https://example.com/result/award-001.pdf",
-    "tags": ["콘텐츠 기획", "콘텐츠 제작", "Chat GPT"]
+    "tags": [
+      "콘텐츠 기획",
+      "콘텐츠 제작",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-002",
@@ -24,7 +27,11 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["교수 학습", "콘텐츠 제작", "Chat GPT"]
+    "tags": [
+      "교수 학습",
+      "콘텐츠 제작",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-003",
@@ -37,7 +44,11 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["AIDT 개발", "개발/자동화", "Chat GPT"]
+    "tags": [
+      "AIDT 개발",
+      "개발/자동화",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-004",
@@ -50,7 +61,11 @@
     "aiTool": "Chat GPT",
     "usage": "동일 업무를 하는 구성원에게 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["AIDT 개발", "개발/자동화", "Chat GPT"]
+    "tags": [
+      "AIDT 개발",
+      "개발/자동화",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-005",
@@ -63,7 +78,11 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["콘텐츠 기획", "콘텐츠 제작", "Chat GPT"]
+    "tags": [
+      "콘텐츠 기획",
+      "콘텐츠 제작",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-006",
@@ -76,7 +95,11 @@
     "aiTool": "Chat GPT",
     "usage": "동일 업무를 하는 구성원에게 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["평가 지원", "기획/검토", "Chat GPT"]
+    "tags": [
+      "평가 지원",
+      "기획/검토",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-007",
@@ -89,7 +112,11 @@
     "aiTool": "Chat GPT",
     "usage": "동일 업무를 하는 구성원에게 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["디자인/비주얼", "콘텐츠 제작", "Chat GPT"]
+    "tags": [
+      "디자인/비주얼",
+      "콘텐츠 제작",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-008",
@@ -102,7 +129,11 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["기획/마케팅", "기획/검토", "Chat GPT"]
+    "tags": [
+      "기획/마케팅",
+      "기획/검토",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-009",
@@ -115,7 +146,11 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["운영/공통", "업무 운영", "Chat GPT"]
+    "tags": [
+      "운영/공통",
+      "업무 운영",
+      "Chat GPT"
+    ]
   },
   {
     "id": "award-010",
@@ -128,6 +163,10 @@
     "aiTool": "Chat GPT",
     "usage": "일부 내용만 수정하면 활용 가능",
     "repeatability": "일부 내용만 수정하면 활용 가능",
-    "tags": ["기획/마케팅", "기획/검토", "Chat GPT"]
+    "tags": [
+      "기획/마케팅",
+      "기획/검토",
+      "Chat GPT"
+    ]
   }
 ]
