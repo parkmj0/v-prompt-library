@@ -213,7 +213,7 @@ export function PromptDetailPanel({
           )}
 
           <PropRow label="소속">
-            <span className="text-sm text-body">{entry.cell}</span>
+            <span className="text-sm text-body">{entry.cell} Cell</span>
           </PropRow>
         </div>
       </div>
@@ -236,7 +236,7 @@ export function PromptDetailPanel({
             />
           </PropRow>
 
-          <PropRow label="타업무자 활용 가능성" labelClassName="text-muted">
+          <PropRow label="동일 업무 활용 가능성" labelClassName="text-muted">
             <StarRating
               filled={
                 entry.usage === "동일 업무를 하는 구성원에게 활용 가능" ? 2 : 4
@@ -293,7 +293,7 @@ export function PromptDetailPanel({
         </div>
 
         {entry.resultFileUrl && (
-          <div className="mt-md pt-md border-t border-hairline">
+          <div className="mt-md pb-lg">
             <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
               결과물 미리보기
             </p>
@@ -302,9 +302,9 @@ export function PromptDetailPanel({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="inline-flex items-center gap-xxs text-sm text-accent hover:underline break-all"
+              className="flex items-center gap-xxs text-sm text-accent hover:underline min-w-0"
             >
-              {entry.resultFileUrl}
+              <span className="truncate">{entry.resultFileUrl}</span>
               <ExternalLink size={14} className="shrink-0" />
             </a>
           </div>

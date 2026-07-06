@@ -18,6 +18,10 @@ const CATEGORIES: { value: string; label: string }[] = [
 const AWARD_FILTERS = ["수상 전체", "Best", "참신상", "운영특별상"];
 const AI_FILTERS = ["AI 전체", "ChatGPT", "Claude", "Gemini"];
 
+const INITIAL_VISIBLE_COUNT = 24;
+const LOAD_MORE_COUNT = 12;
+const AUTO_LOAD_TRIGGER_COUNT = 2;
+
 interface PromptGalleryProps {
   entries: PromptEntry[];
 }
@@ -34,11 +38,16 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [awardFilter, setAwardFilter] = useState("수상 전체");
   const [aiFilter, setAiFilter] = useState("AI 전체");
-  const [visibleCount, setVisibleCount] = useState(24);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [panelWidth, setPanelWidth] = useState(480);
   const [isDragging, setIsDragging] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragState = useRef<{ startX: number; startWidth: number } | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
+  const isAutoLoadingRef = useRef(false);
+  const bottomHitCountRef = useRef(0);
+  const hasUserScrolledRef = useRef(false);
+  const isNearBottomRef = useRef(false);
 
   useEffect(() => {
     const saved = Number(localStorage.getItem("v-prompt-panel-width"));
@@ -120,13 +129,81 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (prevFilterKey !== filterKey) {
     setPrevFilterKey(filterKey);
-    setVisibleCount(24);
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
   }
+
+  // 필터가 바뀌면 하단 감지 카운트 및 자동 로드 가드도 함께 초기화한다.
+  useEffect(() => {
+    bottomHitCountRef.current = 0;
+    isAutoLoadingRef.current = false;
+  }, [filterKey]);
 
   const displayedEntries = useMemo(
     () => filteredEntries.slice(0, visibleCount),
     [filteredEntries, visibleCount],
   );
+
+  const hasMore = visibleCount < filteredEntries.length;
+
+  const loadMore = useCallback(() => {
+    setVisibleCount((prev) =>
+      Math.min(prev + LOAD_MORE_COUNT, filteredEntries.length),
+    );
+  }, [filteredEntries.length]);
+
+  // sentinel이 "하단 근처(rootMargin 240px 이내)"에 있는지만 추적한다.
+  // IntersectionObserver는 isIntersecting이 바뀔 때만 콜백을 호출하므로,
+  // 실제 하단 감지 횟수 카운트는 scroll 이벤트 쪽에서 처리한다.
+  useEffect(() => {
+    if (!hasMore) return;
+    const node = loadMoreRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isNearBottomRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "240px", threshold: 0 },
+    );
+    observer.observe(node);
+    return () => {
+      observer.disconnect();
+      isNearBottomRef.current = false;
+    };
+  }, [hasMore]);
+
+  // 사용자가 실제로 스크롤한 뒤, 하단 근처에서 scroll 이벤트가
+  // AUTO_LOAD_TRIGGER_COUNT번째 발생했을 때만 자동 로드를 실행한다.
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 120) {
+        hasUserScrolledRef.current = true;
+      }
+
+      if (
+        !hasUserScrolledRef.current ||
+        !isNearBottomRef.current ||
+        isAutoLoadingRef.current
+      ) {
+        return;
+      }
+
+      bottomHitCountRef.current += 1;
+      if (bottomHitCountRef.current < AUTO_LOAD_TRIGGER_COUNT) return;
+
+      bottomHitCountRef.current = 0;
+      isAutoLoadingRef.current = true;
+      loadMore();
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loadMore]);
+
+  // visibleCount가 실제로 갱신된 시점(로드 완료)에 자동 로드 가드를 해제해
+  // 다음 배치도 동일하게 2회째 감지에만 반응하도록 한다.
+  useEffect(() => {
+    isAutoLoadingRef.current = false;
+  }, [visibleCount]);
 
   const displayed = useMemo(
     () => entries.find((e) => e.id === displayedId) ?? null,
@@ -295,19 +372,30 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
             )}
           </div>
 
-          {/* 더보기 / 완료 안내 */}
-          {filteredEntries.length > 24 && (
-            <div className="flex items-center justify-center mt-xl">
-              {visibleCount < filteredEntries.length ? (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setVisibleCount((count) => count + 24);
-                  }}
-                  className="px-lg py-sm rounded-pill border border-hairline bg-surface-card text-sm font-medium text-ink hover:bg-surface-strong hover:border-accent/60 hover:shadow-[0_0_0_1px_var(--color-accent)] transition-colors duration-200"
-                >
-                  더보기
-                </button>
+          {/* 더보기 / 자동 로드 sentinel / 완료 안내 */}
+          {filteredEntries.length > INITIAL_VISIBLE_COUNT && (
+            <div className="flex flex-col items-center gap-xs mt-xl">
+              {hasMore ? (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      loadMore();
+                    }}
+                    className="px-lg py-sm rounded-pill border border-hairline bg-surface-card text-sm font-medium text-ink hover:bg-surface-strong hover:border-accent/60 hover:shadow-[0_0_0_1px_var(--color-accent)] transition-colors duration-200"
+                  >
+                    더보기
+                  </button>
+                  <p className="text-xs text-subtle">
+                    스크롤하면 자동으로 더 불러옵니다
+                  </p>
+                  {/* 자동 로드 감지용 sentinel (뷰포트 진입 시 IntersectionObserver 트리거) */}
+                  <div
+                    ref={loadMoreRef}
+                    className="h-px w-full"
+                    aria-hidden="true"
+                  />
+                </>
               ) : (
                 <p className="text-center text-xs text-subtle">
                   모든 프롬프트를 확인했습니다
@@ -319,7 +407,7 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
       </div>
 
       {/* 위로가기 (브라우저 우측 고정, 패널 열림 시 숨김) */}
-      {filteredEntries.length > 24 && !panelOpen && (
+      {filteredEntries.length > INITIAL_VISIBLE_COUNT && !panelOpen && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="맨 위로 이동"

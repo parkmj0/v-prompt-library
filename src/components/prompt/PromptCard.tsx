@@ -56,13 +56,7 @@ function RepeatBadge({ repeatType }: { repeatType: string }) {
       <span className="text-caption text-subtle font-medium whitespace-nowrap">
         업무 사용 반복성
       </span>
-      {repeatType === "바로 복붙" ? (
-        <span className="inline-flex items-center px-2 py-0.5 text-badge rounded-pill bg-success/10 text-success border border-success/20 font-medium whitespace-nowrap">
-          바로 복붙
-        </span>
-      ) : (
-        <StarRating filled={filled} size={12} />
-      )}
+      <StarRating filled={filled} size={12} />
     </div>
   );
 }
@@ -73,7 +67,7 @@ function CrossUsageBadge({ usage }: { usage: string }) {
   return (
     <div className="flex items-center gap-xs">
       <span className="text-caption text-subtle font-medium whitespace-nowrap">
-        타업무자 활용 가능성
+        동일 업무 활용 가능성
       </span>
       <StarRating filled={filled} size={12} />
     </div>
@@ -156,14 +150,20 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
         {/* 태그 */}
         {entry.tags.length > 0 && (
           <div className="flex flex-wrap gap-1">
-            {entry.tags.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/10 text-accent border border-accent/20 font-medium"
-              >
-                {tag}
-              </span>
-            ))}
+            {entry.tags.slice(0, 3).map((tag) =>
+              entry.aiTools.includes(tag) ? (
+                <Badge key={tag} variant="tool">
+                  {tag}
+                </Badge>
+              ) : (
+                <span
+                  key={tag}
+                  className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/10 text-accent border border-accent/20 font-medium"
+                >
+                  {tag}
+                </span>
+              ),
+            )}
           </div>
         )}
 
@@ -173,7 +173,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
             <RepeatBadge repeatType={entry.repeatType} />
             {entry.cell && (
               <span className="text-xs text-subtle truncate shrink-0">
-                {entry.cell}
+                {entry.cell} Cell
               </span>
             )}
           </div>
