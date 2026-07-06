@@ -1,4 +1,4 @@
-import { promises as fs, existsSync } from "fs";
+import { promises as fs, existsSync, readdirSync } from "fs";
 import path from "path";
 import type { PromptEntry, AwardLabel, Category } from "@/types";
 
@@ -14,12 +14,7 @@ const RESULT_EXTENSION: Record<string, string> = {
   image: "png",
 };
 
-const PREVIEW_IMAGE_FILES = [
-  "thumbnail.png",
-  "thumbnail2.png",
-  "thumbnail3.png",
-  "thumbnail4.png",
-];
+const THUMBNAIL_PATTERN = /^thumbnail(\d+)?\.(jpe?g|png|webp)$/i;
 
 function localAssetPath(id: string, filename: string): string | null {
   const absPath = path.join(resultsDir, id, filename);
@@ -27,9 +22,17 @@ function localAssetPath(id: string, filename: string): string | null {
 }
 
 function getPreviewImages(id: string): string[] {
-  return PREVIEW_IMAGE_FILES.map((file) => localAssetPath(id, file)).filter(
-    (src): src is string => src !== null,
-  );
+  const dir = path.join(resultsDir, id);
+  if (!existsSync(dir)) return [];
+
+  return readdirSync(dir)
+    .filter((file) => THUMBNAIL_PATTERN.test(file))
+    .sort(
+      (a, b) =>
+        Number(a.match(THUMBNAIL_PATTERN)?.[1] ?? "0") -
+        Number(b.match(THUMBNAIL_PATTERN)?.[1] ?? "0"),
+    )
+    .map((file) => `/results/${id}/${file}`);
 }
 
 interface RawEntry {
