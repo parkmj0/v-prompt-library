@@ -85,7 +85,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
     Icon: Sparkles,
     tint: "from-surface-strong",
   };
-  const image = entry.thumbnail ?? entry.resultImage;
+  const image = entry.previewImages[0] ?? null;
 
   return (
     <article

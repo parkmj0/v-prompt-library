@@ -63,9 +63,8 @@ export function PromptDetailPanel({
     Icon: Sparkles,
     tint: "from-surface-strong",
   };
-  const previewImage = entry.thumbnail ?? entry.resultImage;
-  const thumbnails = [previewImage, null, null, null];
-  const thumbnail = thumbnails[activeThumb];
+  const thumbnails = entry.previewImages;
+  const thumbnail = thumbnails[activeThumb] ?? null;
 
   useEffect(() => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -122,33 +121,27 @@ export function PromptDetailPanel({
           </div>
         )}
 
-        {/* 썸네일 스트립 — 좌하단 오버레이 */}
-        <div className="absolute bottom-2 left-2 z-10 flex gap-xxs">
-          {thumbnails.map((img, i) => (
-            <button
-              key={i}
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveThumb(i);
-              }}
-              className={`relative w-lg h-lg rounded-md overflow-hidden flex-shrink-0 ring-1 transition-opacity ${
-                i === activeThumb
-                  ? "ring-on-dark opacity-100"
-                  : "ring-on-dark/30 opacity-60 hover:opacity-90"
-              }`}
-            >
-              {img ? (
+        {/* 썸네일 스트립 — 좌하단 오버레이 (미리보기 이미지가 1개 이상이면 노출) */}
+        {thumbnails.length > 0 && (
+          <div className="absolute bottom-2 left-2 z-10 flex gap-xxs">
+            {thumbnails.map((img, i) => (
+              <button
+                key={img}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveThumb(i);
+                }}
+                className={`relative w-lg h-lg rounded-md overflow-hidden flex-shrink-0 ring-1 transition-opacity ${
+                  i === activeThumb
+                    ? "ring-on-dark opacity-100"
+                    : "ring-on-dark/30 opacity-60 hover:opacity-90"
+                }`}
+              >
                 <Image src={img} alt="" fill className="object-cover" />
-              ) : (
-                <div
-                  className={`w-full h-full bg-linear-to-br ${meta.tint} to-surface-dark-elevated flex items-center justify-center`}
-                >
-                  <meta.Icon size={10} className="text-on-dark/60" />
-                </div>
-              )}
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── 상단 요약 ─────────────────────────────────── */}

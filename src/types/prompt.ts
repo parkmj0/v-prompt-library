@@ -26,8 +26,7 @@ export interface PromptEntry {
   resultType: ResultType;
   resultDesc: string;
   resultPreview: string;
-  thumbnail: string | null;
-  resultImage: string | null;
+  previewImages: string[];
   resultFileUrl: string | null;
   resultFileName: string | null;
   tags: string[];
