@@ -171,3 +171,13 @@ button {
 .panel-scrollarea::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-subtle);
 }
+
+/* ── 모바일 탭/필터 가로 스크롤 (스크롤바 숨김, 스와이프는 그대로 동작) ── */
+.hscroll-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hscroll-hide::-webkit-scrollbar {
+  display: none;
+}

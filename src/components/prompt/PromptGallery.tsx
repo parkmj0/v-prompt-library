@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
-import { ArrowUp, Search, X } from "lucide-react";
+import { ArrowUp, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import type { PromptEntry } from "@/types";
 import { PromptCard } from "./PromptCard";
 import { PromptDetailPanel } from "./PromptDetailPanel";
@@ -30,6 +30,89 @@ function normalizeAI(s: string) {
   return s.replace(/\s/g, "").toLowerCase();
 }
 
+/** 모바일에서는 가로 스크롤(+ 화살표 버튼), 데스크톱에서는 flex-wrap으로 표시하는 행 */
+function HScrollRow({
+  isMobile,
+  className = "",
+  children,
+}: {
+  isMobile: boolean;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 4);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    updateScrollState();
+    window.addEventListener("resize", updateScrollState);
+    return () => window.removeEventListener("resize", updateScrollState);
+  }, [isMobile, updateScrollState]);
+
+  function handleScroll() {
+    updateScrollState();
+    setHasScrolled(true);
+  }
+
+  function scrollByAmount(dir: 1 | -1) {
+    scrollRef.current?.scrollBy({ left: dir * 160, behavior: "smooth" });
+  }
+
+  if (!isMobile) {
+    return <div className={`flex flex-wrap ${className}`}>{children}</div>;
+  }
+
+  return (
+    <div className="relative">
+      {canScrollLeft && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            scrollByAmount(-1);
+          }}
+          aria-label="이전"
+          className={`absolute left-0 top-1/2 z-10 -translate-y-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-canvas/70 shadow-card text-on-dark transition-opacity duration-300 ${
+            hasScrolled ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <ChevronLeft size={16} />
+        </button>
+      )}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className={`flex overflow-x-auto hscroll-hide ${className}`}
+      >
+        {children}
+      </div>
+      {canScrollRight && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            scrollByAmount(1);
+          }}
+          aria-label="다음"
+          className={`absolute right-0 top-1/2 z-10 -translate-y-1/2 flex items-center justify-center w-6 h-6 rounded-full bg-canvas/70 shadow-card text-on-dark transition-opacity duration-300 ${
+            hasScrolled ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
+        >
+          <ChevronRight size={16} />
+        </button>
+      )}
+    </div>
+  );
+}
+
 export function PromptGallery({ entries }: PromptGalleryProps) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [displayedId, setDisplayedId] = useState<string | null>(null);
@@ -41,6 +124,7 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [panelWidth, setPanelWidth] = useState(480);
   const [isDragging, setIsDragging] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dragState = useRef<{ startX: number; startWidth: number } | null>(null);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
@@ -52,6 +136,14 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
   useEffect(() => {
     const saved = Number(localStorage.getItem("v-prompt-panel-width"));
     if (saved >= 300 && saved <= 800) setPanelWidth(saved);
+  }, []);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
   }, []);
 
   const handleDragStart = useCallback(
@@ -282,70 +374,84 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
           </div>
 
           {/* 1단: 카테고리 탭 */}
-          <div className="flex flex-wrap gap-sm border-b border-hairline mb-xs">
-            {CATEGORIES.map(({ value, label }) => (
-              <button
-                key={value}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleCategoryChange(value);
-                }}
-                className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
-                  activeCategory === value
-                    ? "border-accent text-ink font-semibold"
-                    : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
+          <div className="border-b border-hairline mb-xs">
+            <HScrollRow isMobile={isMobile} className="gap-sm">
+              {CATEGORIES.map(({ value, label }) => (
+                <button
+                  key={value}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCategoryChange(value);
+                  }}
+                  className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
+                    activeCategory === value
+                      ? "border-accent text-ink font-semibold"
+                      : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </HScrollRow>
           </div>
 
           {/* 2단: 상세 필터 칩 */}
-          <div className="flex flex-wrap items-center gap-xs py-sm mb-lg">
-            {/* 수상 그룹 */}
-            <div className="flex items-center gap-2xs">
-              {AWARD_FILTERS.map((f) => (
-                <button
-                  key={f}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setAwardFilter(f);
-                  }}
-                  className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
-                    awardFilter === f
-                      ? "bg-accent/15 text-ink border-transparent"
-                      : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
+          <div
+            className={`py-sm mb-lg ${
+              isMobile
+                ? "flex flex-col gap-xs"
+                : "flex flex-wrap items-center gap-xs"
+            }`}
+          >
+            <HScrollRow isMobile={isMobile} className="items-center gap-xs">
+              {/* 수상 그룹 */}
+              <div className="flex items-center gap-2xs flex-shrink-0">
+                {AWARD_FILTERS.map((f) => (
+                  <button
+                    key={f}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setAwardFilter(f);
+                    }}
+                    className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
+                      awardFilter === f
+                        ? "bg-accent/15 text-ink border-transparent"
+                        : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                    }`}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
 
-            <span className="flex-shrink-0 w-px h-4 bg-hairline" />
+              <span className="flex-shrink-0 w-px h-4 bg-hairline" />
 
-            {/* AI 그룹 */}
-            <div className="flex items-center gap-2xs">
-              {AI_FILTERS.map((f) => (
-                <button
-                  key={f}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setAiFilter(f);
-                  }}
-                  className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
-                    aiFilter === f
-                      ? "bg-accent/15 text-ink border-transparent"
-                      : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
+              {/* AI 그룹 */}
+              <div className="flex items-center gap-2xs flex-shrink-0">
+                {AI_FILTERS.map((f) => (
+                  <button
+                    key={f}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setAiFilter(f);
+                    }}
+                    className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
+                      aiFilter === f
+                        ? "bg-accent/15 text-ink border-transparent"
+                        : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                    }`}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+            </HScrollRow>
 
-            <span className="ml-auto flex-shrink-0 text-sm text-subtle whitespace-nowrap pl-md">
+            <span
+              className={`flex-shrink-0 text-sm text-subtle whitespace-nowrap ${
+                isMobile ? "" : "ml-auto pl-md"
+              }`}
+            >
               {isSearching
                 ? `검색 결과 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`
                 : `총 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`}
@@ -417,34 +523,48 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
         </button>
       )}
 
-      {/* 패널 래퍼 */}
-      <div
-        className={`sticky top-0 h-screen flex-shrink-0 overflow-hidden bg-surface-soft ${
-          !isDragging
-            ? "transition-[width] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
-            : ""
-        }`}
-        style={{ width: panelOpen ? panelWidth : 0 }}
-      >
-        {/* 드래그 핸들 */}
-        {panelOpen && (
-          <div
-            className="absolute left-0 top-0 w-1.5 h-full z-20 cursor-col-resize group"
-            onPointerDown={handleDragStart}
-            onPointerMove={handleDragMove}
-            onPointerUp={handleDragEnd}
-          >
-            <div className="w-full h-full group-hover:bg-accent/40 transition-colors duration-200" />
+      {/* 패널 래퍼 — 모바일: 풀스크린 오버레이 / 데스크톱: 드래그 리사이즈 사이드바 */}
+      {isMobile ? (
+        panelOpen && (
+          <div className="fixed inset-0 z-40 overflow-hidden bg-surface-soft">
+            {displayed && (
+              <PromptDetailPanel
+                entry={displayed}
+                onClose={closePanel}
+                isClosing={isClosing}
+              />
+            )}
           </div>
-        )}
-        {displayed && (
-          <PromptDetailPanel
-            entry={displayed}
-            onClose={closePanel}
-            isClosing={isClosing}
-          />
-        )}
-      </div>
+        )
+      ) : (
+        <div
+          className={`sticky top-0 h-screen flex-shrink-0 overflow-hidden bg-surface-soft ${
+            !isDragging
+              ? "transition-[width] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+              : ""
+          }`}
+          style={{ width: panelOpen ? panelWidth : 0 }}
+        >
+          {/* 드래그 핸들 */}
+          {panelOpen && (
+            <div
+              className="absolute left-0 top-0 w-1.5 h-full z-20 cursor-col-resize group"
+              onPointerDown={handleDragStart}
+              onPointerMove={handleDragMove}
+              onPointerUp={handleDragEnd}
+            >
+              <div className="w-full h-full group-hover:bg-accent/40 transition-colors duration-200" />
+            </div>
+          )}
+          {displayed && (
+            <PromptDetailPanel
+              entry={displayed}
+              onClose={closePanel}
+              isClosing={isClosing}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 }

@@ -106,7 +106,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
             src={image}
             alt={entry.title}
             fill
-            className="object-cover opacity-60 transition-transform duration-200 group-hover:scale-105"
+            className="object-cover opacity-50 transition-transform duration-200 group-hover:scale-105"
           />
         ) : (
           <div className="transition-transform duration-200 group-hover:scale-105">
