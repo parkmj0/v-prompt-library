@@ -9,12 +9,12 @@ interface BadgeProps {
 }
 
 const AWARD_STYLE: Record<string, string> = {
-  대상: "bg-award-special-bg text-award-special-text border-award-special-border",
-  Best: "bg-award-gold-bg text-award-gold-text border-award-gold-border",
+  대상: "bg-award-special-bg text-award-special-text border-award-special-border/60",
+  Best: "bg-award-gold-bg text-award-gold-text border-award-gold-border/60",
   참신상:
-    "bg-award-commend-bg text-award-commend-text border-award-commend-border",
+    "bg-award-commend-bg text-award-commend-text border-award-commend-border/60",
   운영특별상:
-    "bg-award-bronze-bg text-award-bronze-text border-award-bronze-border",
+    "bg-award-bronze-bg text-award-bronze-text border-award-bronze-border/60",
 };
 
 const AWARD_ICON: Record<string, typeof Crown> = {
@@ -26,7 +26,7 @@ const AWARD_ICON: Record<string, typeof Crown> = {
 
 const VARIANT_STYLE: Record<string, string> = {
   category: "bg-surface-card text-muted border-hairline",
-  tool: "bg-tool-bg text-tool-text border-tool-border",
+  tool: "bg-tool-bg text-tool-text border-tool-border/70",
   tag: "bg-surface-soft text-subtle border-hairline",
 };
 

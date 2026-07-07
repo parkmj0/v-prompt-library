@@ -122,7 +122,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
         {/* 수상 배지 — 좌상단 오버레이 (추천작 제외) */}
         {entry.award !== "추천작" && (
           <div className="absolute top-2 left-2">
-            <Badge variant="award" value={entry.award} bordered={false}>
+            <Badge variant="award" value={entry.award}>
               {entry.award}
             </Badge>
           </div>
@@ -161,7 +161,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
               .map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/10 text-accent border border-accent/20 font-medium"
+                  className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/10 text-accent border border-accent/15 font-medium"
                 >
                   {tag}
                 </span>

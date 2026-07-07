@@ -103,7 +103,7 @@ export function PromptDetailPanel({
 
       {/* ── 섬네일 이미지 (카드 섬네일과 동일 스타일) ──── */}
       <div
-        className={`relative h-36 w-full overflow-hidden bg-linear-to-br ${meta.tint} to-surface-dark-elevated flex-shrink-0`}
+        className={`relative h-48 w-full overflow-hidden bg-linear-to-br ${meta.tint} to-surface-dark-elevated flex-shrink-0`}
       >
         {thumbnail ? (
           <Image

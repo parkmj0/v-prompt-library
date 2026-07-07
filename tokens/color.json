@@ -45,28 +45,28 @@
     },
     "award": {
       "special": {
-        "bg": { "value": "#f59e0b26", "type": "color" },
-        "text": { "value": "#fbbf24", "type": "color" },
+        "bg": { "value": "#f59e0b40", "type": "color" },
+        "text": { "value": "#fcd34d", "type": "color" },
         "border": { "value": "#f59e0b4d", "type": "color" }
       },
       "gold": {
-        "bg": { "value": "#eab30826", "type": "color" },
-        "text": { "value": "#facc15", "type": "color" },
+        "bg": { "value": "#eab30840", "type": "color" },
+        "text": { "value": "#fde047", "type": "color" },
         "border": { "value": "#eab3084d", "type": "color" }
       },
       "silver": {
-        "bg": { "value": "#ffffff14", "type": "color" },
-        "text": { "value": "#d4d4d8", "type": "color" },
+        "bg": { "value": "#ffffff20", "type": "color" },
+        "text": { "value": "#e4e4e7", "type": "color" },
         "border": { "value": "#ffffff26", "type": "color" }
       },
       "bronze": {
-        "bg": { "value": "#8b5cf626", "type": "color" },
-        "text": { "value": "#a78bfa", "type": "color" },
+        "bg": { "value": "#8b5cf640", "type": "color" },
+        "text": { "value": "#c4b5fd", "type": "color" },
         "border": { "value": "#8b5cf64d", "type": "color" }
       },
       "commend": {
-        "bg": { "value": "#3b82f626", "type": "color" },
-        "text": { "value": "#60a5fa", "type": "color" },
+        "bg": { "value": "#3b82f640", "type": "color" },
+        "text": { "value": "#93c5fd", "type": "color" },
         "border": { "value": "#3b82f64d", "type": "color" }
       }
     },
