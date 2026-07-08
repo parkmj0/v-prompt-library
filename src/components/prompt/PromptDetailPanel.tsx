@@ -281,8 +281,26 @@ export function PromptDetailPanel({
         </div>
       </div>
 
-      {/* ── 최종 제출 Prompt + 결과물 미리보기 + 활용 방법 ── */}
-      <div className="px-lg py-md flex flex-col border-b border-hairline">
+      {/* ── 결과물 미리보기 + 최종 제출 Prompt + 활용 방법 ── */}
+      <div className="px-lg py-md pb-lg flex flex-col gap-md border-b border-hairline">
+        {entry.resultFileUrl && (
+          <div>
+            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
+              결과물 미리보기
+            </p>
+            <a
+              href={entry.resultFileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="flex items-center gap-xxs text-sm text-accent hover:underline min-w-0"
+            >
+              <span className="truncate">{entry.resultFileUrl}</span>
+              <ExternalLink size={14} className="shrink-0" />
+            </a>
+          </div>
+        )}
+
         <div>
           <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
             최종 제출 Prompt
@@ -309,24 +327,6 @@ export function PromptDetailPanel({
             </button>
           </div>
         </div>
-
-        {entry.resultFileUrl && (
-          <div className="mt-md pb-lg">
-            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
-              결과물 미리보기
-            </p>
-            <a
-              href={entry.resultFileUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-xxs text-sm text-accent hover:underline min-w-0"
-            >
-              <span className="truncate">{entry.resultFileUrl}</span>
-              <ExternalLink size={14} className="shrink-0" />
-            </a>
-          </div>
-        )}
       </div>
 
       <ImageLightbox
