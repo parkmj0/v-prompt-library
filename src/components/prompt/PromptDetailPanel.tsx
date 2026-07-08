@@ -13,10 +13,12 @@ import {
   MessageSquare,
   SearchCheck,
   Sparkles,
+  Maximize2,
 } from "lucide-react";
 import type { PromptEntry } from "@/types";
 import { Badge } from "@/components/ui/Badge";
 import { StarRating } from "@/components/ui/StarRating";
+import { ImageLightbox } from "@/components/ui/ImageLightbox";
 
 const CATEGORY_META: Record<string, { Icon: typeof Sparkles; tint: string }> = {
   "개발/자동화": { Icon: Code2, tint: "from-category-dev" },
@@ -58,6 +60,7 @@ export function PromptDetailPanel({
 }: PromptDetailPanelProps) {
   const [copied, setCopied] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const meta = CATEGORY_META[entry.category] ?? {
     Icon: Sparkles,
@@ -106,12 +109,19 @@ export function PromptDetailPanel({
         className={`relative h-48 w-full overflow-hidden bg-linear-to-br ${meta.tint} to-surface-dark-elevated flex-shrink-0`}
       >
         {thumbnail ? (
-          <Image
-            src={thumbnail}
-            alt={entry.title}
-            fill
-            className="object-cover"
-          />
+          <button
+            type="button"
+            onClick={() => setIsLightboxOpen(true)}
+            className="absolute inset-0 h-full w-full cursor-zoom-in"
+            aria-label="이미지 크게 보기"
+          >
+            <Image
+              src={thumbnail}
+              alt={entry.title}
+              fill
+              className="object-cover"
+            />
+          </button>
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-xs">
             <meta.Icon size={28} className="text-on-dark/60" />
@@ -119,6 +129,20 @@ export function PromptDetailPanel({
               결과물 미리보기
             </span>
           </div>
+        )}
+
+        {thumbnails.length > 0 && (
+          <button
+            type="button"
+            aria-label="이미지 크게 보기"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsLightboxOpen(true);
+            }}
+            className="absolute bottom-3 right-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-canvas/30 text-on-dark backdrop-blur-2xl shadow-sm transition-colors duration-200 hover:bg-canvas/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+          >
+            <Maximize2 size={20} />
+          </button>
         )}
 
         {/* 썸네일 스트립 — 좌하단 오버레이 (미리보기 이미지가 1개 이상이면 노출) */}
@@ -304,6 +328,14 @@ export function PromptDetailPanel({
           </div>
         )}
       </div>
+
+      <ImageLightbox
+        images={thumbnails}
+        initialIndex={activeThumb}
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        alt={entry.title}
+      />
     </aside>
   );
 }

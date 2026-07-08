@@ -5,11 +5,17 @@ import { getPromptEntries } from "@/data/loader";
 import { PromptGallery } from "@/components/prompt/PromptGallery";
 import { withBasePath } from "@/lib/basePath";
 
-const HERO_BG_FILE = "/hero-bg.jpg";
-const HERO_BG = withBasePath(HERO_BG_FILE);
-const hasHeroBg = existsSync(
-  path.join(process.cwd(), "public", HERO_BG_FILE.replace(/^\//, "")),
+const HERO_BG_PC_FILE = "/images/hero-bg.jpg";
+const HERO_BG_MOBILE_FILE = "/images/hero-bg-mobile.jpg";
+const HERO_BG_PC = withBasePath(HERO_BG_PC_FILE);
+const HERO_BG_MOBILE = withBasePath(HERO_BG_MOBILE_FILE);
+const hasHeroBgPc = existsSync(
+  path.join(process.cwd(), "public", HERO_BG_PC_FILE.replace(/^\//, "")),
 );
+const hasHeroBgMobile = existsSync(
+  path.join(process.cwd(), "public", HERO_BG_MOBILE_FILE.replace(/^\//, "")),
+);
+const hasHeroBg = hasHeroBgPc || hasHeroBgMobile;
 
 export default async function HomePage() {
   const entries = await getPromptEntries();
@@ -18,8 +24,23 @@ export default async function HomePage() {
     <main className="min-h-screen bg-canvas">
       {/* Hero */}
       <section className="relative overflow-hidden bg-surface-dark text-on-dark px-lg py-xxl">
-        {hasHeroBg && (
-          <Image src={HERO_BG} alt="" fill priority className="object-cover" />
+        {hasHeroBgPc && (
+          <Image
+            src={HERO_BG_PC}
+            alt=""
+            fill
+            priority
+            className="hidden object-cover sm:block"
+          />
+        )}
+        {hasHeroBgMobile && (
+          <Image
+            src={HERO_BG_MOBILE}
+            alt=""
+            fill
+            priority
+            className="object-cover sm:hidden"
+          />
         )}
         <div
           aria-hidden
