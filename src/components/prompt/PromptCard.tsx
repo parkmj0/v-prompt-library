@@ -161,7 +161,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
               .map((tag) => (
                 <span
                   key={tag}
-                  className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/10 text-accent border border-accent/15 font-medium"
+                  className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/20 text-on-accent border border-accent/40 font-medium"
                 >
                   {tag}
                 </span>

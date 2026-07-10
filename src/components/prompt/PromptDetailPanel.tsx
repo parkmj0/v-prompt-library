@@ -226,7 +226,7 @@ export function PromptDetailPanel({
                 {entry.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-surface-card text-muted border border-hairline font-medium"
+                    className="inline-flex h-lg items-center justify-center px-2 py-0.5 text-badge leading-none rounded-pill bg-accent/20 text-on-accent border border-accent/40 font-medium"
                   >
                     {tag}
                   </span>

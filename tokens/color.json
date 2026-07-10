@@ -23,13 +23,15 @@
       "strong": { "value": "#232327", "type": "color" },
       "search": { "value": "#242740", "type": "color" },
       "filter": { "value": "#0c1019", "type": "color" },
+      "tag": { "value": "#1c2138", "type": "color" },
       "dark": { "value": "#101010", "type": "color" },
       "dark-elevated": { "value": "#1a1a1a", "type": "color" }
     },
     "on": {
       "primary": { "value": "#0a0a0c", "type": "color" },
       "dark": { "value": "#ffffff", "type": "color" },
-      "dark-soft": { "value": "#a1a1aa", "type": "color" }
+      "dark-soft": { "value": "#a1a1aa", "type": "color" },
+      "accent": { "value": "#93c5fd", "type": "color" }
     },
     "badge": {
       "orange": { "value": "#fb923c", "type": "color" },
@@ -46,28 +48,28 @@
     },
     "award": {
       "special": {
-        "bg": { "value": "#f59e0b33", "type": "color" },
-        "text": { "value": "#fcd34d", "type": "color" },
+        "bg": { "value": "#f59e0b99", "type": "color" },
+        "text": { "value": "#fde68a", "type": "color" },
         "border": { "value": "#f59e0b4d", "type": "color" }
       },
       "gold": {
-        "bg": { "value": "#eab30833", "type": "color" },
-        "text": { "value": "#fde047", "type": "color" },
+        "bg": { "value": "#eab30880", "type": "color" },
+        "text": { "value": "#fef08a", "type": "color" },
         "border": { "value": "#eab3084d", "type": "color" }
       },
       "silver": {
-        "bg": { "value": "#ffffff1a", "type": "color" },
-        "text": { "value": "#e4e4e7", "type": "color" },
+        "bg": { "value": "#ffffff4d", "type": "color" },
+        "text": { "value": "#f4f4f5", "type": "color" },
         "border": { "value": "#ffffff26", "type": "color" }
       },
       "bronze": {
-        "bg": { "value": "#8b5cf633", "type": "color" },
-        "text": { "value": "#c4b5fd", "type": "color" },
+        "bg": { "value": "#8b5cf699", "type": "color" },
+        "text": { "value": "#ddd6fe", "type": "color" },
         "border": { "value": "#8b5cf64d", "type": "color" }
       },
       "commend": {
-        "bg": { "value": "#3b82f633", "type": "color" },
-        "text": { "value": "#93c5fd", "type": "color" },
+        "bg": { "value": "#3b82f699", "type": "color" },
+        "text": { "value": "#bfdbfe", "type": "color" },
         "border": { "value": "#3b82f64d", "type": "color" }
       }
     },

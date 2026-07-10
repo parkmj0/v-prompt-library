@@ -25,11 +25,13 @@
   --color-surface-strong: var(--color-surface-strong);
   --color-surface-search: var(--color-surface-search);
   --color-surface-filter: var(--color-surface-filter);
+  --color-surface-tag: var(--color-surface-tag);
   --color-surface-dark: var(--color-surface-dark);
   --color-surface-dark-elevated: var(--color-surface-dark-elevated);
   --color-on-primary: var(--color-on-primary);
   --color-on-dark: var(--color-on-dark);
   --color-on-dark-soft: var(--color-on-dark-soft);
+  --color-on-accent: var(--color-on-accent);
   --color-badge-orange: var(--color-badge-orange);
   --color-badge-pink: var(--color-badge-pink);
   --color-badge-violet: var(--color-badge-violet);
