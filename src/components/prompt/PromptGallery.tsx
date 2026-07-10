@@ -370,49 +370,51 @@ export function PromptGallery({
         style={{ paddingRight: !isMobile && panelOpen ? panelWidth : 0 }}
         onClick={instantClose}
       >
-        {/* 상단 공유 배경 영역: Hero 타이틀 + 검색/필터 툴바가 같은 배경을 공유하며, 카드 그리드 시작 직전에 canvas로 자연스럽게 사라짐 */}
+        {/* 공유 배경 영역: 히어로 타이틀+검색/필터 툴바와 카드 그리드가 영상/이미지 배경을 함께 사용 */}
         <div className="relative overflow-hidden">
-          {hasHeroBgPc && heroBgPcSrc && (
-            <Image
-              src={heroBgPcSrc}
-              alt=""
-              fill
-              priority
-              className="hidden object-cover object-top md:block"
-            />
-          )}
-          {hasHeroBgMobile && heroBgMobileSrc && (
-            <Image
-              src={heroBgMobileSrc}
-              alt=""
-              fill
-              priority
-              className="object-cover md:hidden"
-            />
-          )}
-          {hasHeroVideo && (
-            <video
-              aria-hidden="true"
-              autoPlay
-              muted
-              loop
-              playsInline
-              poster={heroBgPcSrc ?? undefined}
-              className="hero-bg-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-top md:block motion-reduce:hidden"
-            >
-              {heroVideoWebmSrc && (
-                <source src={heroVideoWebmSrc} type="video/webm" />
-              )}
-              {heroVideoMp4Src && (
-                <source src={heroVideoMp4Src} type="video/mp4" />
-              )}
-            </video>
-          )}
           {hasHeroBg && (
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-surface-dark/45"
-            />
+            <div className="absolute inset-x-0 top-0 h-[50vh] w-full">
+              {hasHeroBgPc && heroBgPcSrc && (
+                <Image
+                  src={heroBgPcSrc}
+                  alt=""
+                  fill
+                  priority
+                  className="hidden object-cover object-top md:block"
+                />
+              )}
+              {hasHeroBgMobile && heroBgMobileSrc && (
+                <Image
+                  src={heroBgMobileSrc}
+                  alt=""
+                  fill
+                  priority
+                  className="object-cover object-top md:hidden"
+                />
+              )}
+              {hasHeroVideo && (
+                <video
+                  aria-hidden="true"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster={heroBgPcSrc ?? undefined}
+                  className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-top md:block motion-reduce:hidden"
+                >
+                  {heroVideoWebmSrc && (
+                    <source src={heroVideoWebmSrc} type="video/webm" />
+                  )}
+                  {heroVideoMp4Src && (
+                    <source src={heroVideoMp4Src} type="video/mp4" />
+                  )}
+                </video>
+              )}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-[12vh] w-full bg-gradient-to-b from-transparent to-canvas"
+              />
+            </div>
           )}
           <div className="relative mx-auto max-w-7xl px-lg pt-xxl">
             <div className="relative text-on-dark">
@@ -440,7 +442,7 @@ export function PromptGallery({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
                   placeholder="제목, 업무 상황, 활용 AI, 키워드로 검색"
-                  className="w-full pl-10 pr-10 py-sm bg-surface-search/60 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                  className="w-full pl-10 pr-10 py-sm bg-surface-search/70 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
                 />
                 {isSearching && (
                   <button
@@ -457,7 +459,7 @@ export function PromptGallery({
               </div>
 
               {/* 1단: 카테고리 탭 */}
-              <div className="border-b border-hairline/60 mb-xs">
+              <div className="border-b border-hairline mb-xs">
                 <HScrollRow isMobile={isMobile} className="gap-sm">
                   {CATEGORIES.map(({ value, label }) => (
                     <button
@@ -468,7 +470,7 @@ export function PromptGallery({
                       }}
                       className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
                         activeCategory === value
-                          ? "border-accent text-ink font-semibold"
+                          ? "border-accent text-on-dark font-semibold"
                           : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
                       }`}
                     >
@@ -498,8 +500,8 @@ export function PromptGallery({
                         }}
                         className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
                           awardFilter === f
-                            ? "bg-accent/15 text-ink border-transparent"
-                            : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                            ? "bg-accent text-on-dark border-transparent"
+                            : "bg-surface-filter text-ink border-transparent hover:bg-surface-strong"
                         }`}
                       >
                         {f}
@@ -520,8 +522,8 @@ export function PromptGallery({
                         }}
                         className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
                           aiFilter === f
-                            ? "bg-accent/15 text-ink border-transparent"
-                            : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                            ? "bg-accent text-on-dark border-transparent"
+                            : "bg-surface-filter text-ink border-transparent hover:bg-surface-strong"
                         }`}
                       >
                         {f}
@@ -542,66 +544,60 @@ export function PromptGallery({
               </div>
             </div>
           </div>
-          {hasHeroBg && (
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-canvas md:h-56"
-            />
-          )}
-        </div>
 
-        <div className="mx-auto max-w-7xl px-lg pb-xl">
-          {/* 카드 그리드 */}
-          <div className="grid gap-x-md gap-y-lg-xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredEntries.length === 0 ? (
-              <p className="col-span-full text-subtle py-16 text-center text-sm">
-                {isSearching
-                  ? `"${searchQuery.trim()}"에 해당하는 수상작이 없습니다.`
-                  : "해당 조건에 맞는 수상작이 없습니다."}
-              </p>
-            ) : (
-              displayedEntries.map((entry) => (
-                <PromptCard
-                  key={entry.id}
-                  entry={entry}
-                  isSelected={entry.id === selectedId}
-                  onClick={() => handleCardClick(entry)}
-                />
-              ))
-            )}
-          </div>
-
-          {/* 더보기 / 자동 로드 sentinel / 완료 안내 */}
-          {filteredEntries.length > INITIAL_VISIBLE_COUNT && (
-            <div className="flex flex-col items-center gap-xs mt-xl">
-              {hasMore ? (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      loadMore();
-                    }}
-                    className="px-lg py-sm rounded-pill border border-hairline bg-surface-card text-sm font-medium text-ink hover:bg-surface-strong hover:border-accent/60 hover:shadow-[0_0_0_1px_var(--color-accent)] transition-colors duration-200"
-                  >
-                    더보기
-                  </button>
-                  <p className="text-xs text-subtle">
-                    스크롤하면 자동으로 더 불러옵니다
-                  </p>
-                  {/* 자동 로드 감지용 sentinel (뷰포트 진입 시 IntersectionObserver 트리거) */}
-                  <div
-                    ref={loadMoreRef}
-                    className="h-px w-full"
-                    aria-hidden="true"
-                  />
-                </>
-              ) : (
-                <p className="text-center text-xs text-subtle">
-                  모든 프롬프트를 확인했습니다
+          <div className="relative mx-auto max-w-7xl px-lg pb-xl">
+            {/* 카드 그리드 */}
+            <div className="grid gap-x-md gap-y-lg-xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {filteredEntries.length === 0 ? (
+                <p className="col-span-full text-subtle py-16 text-center text-sm">
+                  {isSearching
+                    ? `"${searchQuery.trim()}"에 해당하는 수상작이 없습니다.`
+                    : "해당 조건에 맞는 수상작이 없습니다."}
                 </p>
+              ) : (
+                displayedEntries.map((entry) => (
+                  <PromptCard
+                    key={entry.id}
+                    entry={entry}
+                    isSelected={entry.id === selectedId}
+                    onClick={() => handleCardClick(entry)}
+                  />
+                ))
               )}
             </div>
-          )}
+
+            {/* 더보기 / 자동 로드 sentinel / 완료 안내 */}
+            {filteredEntries.length > INITIAL_VISIBLE_COUNT && (
+              <div className="flex flex-col items-center gap-xs mt-xl">
+                {hasMore ? (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        loadMore();
+                      }}
+                      className="px-lg py-sm rounded-pill border border-hairline bg-surface-card text-sm font-medium text-ink hover:bg-surface-strong hover:border-accent/60 hover:shadow-[0_0_0_1px_var(--color-accent)] transition-colors duration-200"
+                    >
+                      더보기
+                    </button>
+                    <p className="text-xs text-subtle">
+                      스크롤하면 자동으로 더 불러옵니다
+                    </p>
+                    {/* 자동 로드 감지용 sentinel (뷰포트 진입 시 IntersectionObserver 트리거) */}
+                    <div
+                      ref={loadMoreRef}
+                      className="h-px w-full"
+                      aria-hidden="true"
+                    />
+                  </>
+                ) : (
+                  <p className="text-center text-xs text-subtle">
+                    모든 프롬프트를 확인했습니다
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

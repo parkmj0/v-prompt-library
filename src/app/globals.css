@@ -24,6 +24,7 @@
   --color-surface-card: var(--color-surface-card);
   --color-surface-strong: var(--color-surface-strong);
   --color-surface-search: var(--color-surface-search);
+  --color-surface-filter: var(--color-surface-filter);
   --color-surface-dark: var(--color-surface-dark);
   --color-surface-dark-elevated: var(--color-surface-dark-elevated);
   --color-on-primary: var(--color-on-primary);
@@ -171,27 +172,6 @@ button {
 
 .panel-scrollarea::-webkit-scrollbar-thumb:hover {
   background-color: var(--color-subtle);
-}
-
-/* ── Hero 배경 영상: 은은한 8초 주기 줌 인/아웃으로 모션感 보강 ── */
-.hero-bg-video {
-  animation: hero-video-pan 8s ease-in-out infinite alternate;
-}
-
-@keyframes hero-video-pan {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.04);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-bg-video {
-    animation: none;
-    transform: scale(1.04);
-  }
 }
 
 /* ── 모바일 탭/필터 가로 스크롤 (스크롤바 숨김, 스와이프는 그대로 동작) ── */

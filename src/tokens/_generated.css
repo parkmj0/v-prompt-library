@@ -57,8 +57,8 @@
   --color-body: #d4d4d8;
   --color-muted: #a1a1aa;
   --color-subtle: #82819e;
-  --color-canvas: #0e0e14;
-  --color-hairline: #232538;
+  --color-canvas: #020617;
+  --color-hairline: #282d3a;
   --color-hairline-soft: #1c1c1f;
   --color-success: #10b981;
   --color-warning: #f59e0b;
@@ -66,10 +66,11 @@
   --color-accent: #3b82f6;
   --color-selected: #7f92b5;
   --color-tab-default: #ada5b9;
-  --color-surface-soft: #20202c;
-  --color-surface-card: #17182a;
+  --color-surface-soft: #0d1123;
+  --color-surface-card: #181c30;
   --color-surface-strong: #232327;
   --color-surface-search: #242740;
+  --color-surface-filter: #0c1019;
   --color-surface-dark: #101010;
   --color-surface-dark-elevated: #1a1a1a;
   --color-on-primary: #0a0a0c;
