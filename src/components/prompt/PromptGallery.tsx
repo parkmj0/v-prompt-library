@@ -442,7 +442,7 @@ export function PromptGallery({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
                   placeholder="제목, 업무 상황, 활용 AI, 키워드로 검색"
-                  className="w-full pl-10 pr-10 py-sm bg-surface-search/70 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                  className="w-full pl-10 pr-10 py-sm bg-surface-search/60 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
                 />
                 {isSearching && (
                   <button
