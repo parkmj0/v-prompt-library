@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useRef, useCallback, useEffect } from "react";
+import Image from "next/image";
 import { ArrowUp, ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import type { PromptEntry } from "@/types";
 import { PromptCard } from "./PromptCard";
@@ -31,6 +32,10 @@ const AUTO_LOAD_TRIGGER_COUNT = 2;
 
 interface PromptGalleryProps {
   entries: PromptEntry[];
+  heroBgPcSrc?: string | null;
+  heroBgMobileSrc?: string | null;
+  heroVideoWebmSrc?: string | null;
+  heroVideoMp4Src?: string | null;
 }
 
 function normalizeAI(s: string) {
@@ -120,7 +125,18 @@ function HScrollRow({
   );
 }
 
-export function PromptGallery({ entries }: PromptGalleryProps) {
+export function PromptGallery({
+  entries,
+  heroBgPcSrc,
+  heroBgMobileSrc,
+  heroVideoWebmSrc,
+  heroVideoMp4Src,
+}: PromptGalleryProps) {
+  const hasHeroBgPc = Boolean(heroBgPcSrc);
+  const hasHeroBgMobile = Boolean(heroBgMobileSrc);
+  const hasHeroVideo = Boolean(heroVideoWebmSrc || heroVideoMp4Src);
+  const hasHeroBg = hasHeroBgPc || hasHeroBgMobile || hasHeroVideo;
+
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [displayedId, setDisplayedId] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
@@ -343,123 +359,198 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
   const isSearching = searchQuery.trim().length > 0;
 
   return (
-    <div className="flex items-start">
+    <div className="relative z-10 flex items-start">
       {/* Gallery */}
-      <div className="flex-1 min-w-0">
-        <div className="mx-auto max-w-7xl px-lg py-xl" onClick={instantClose}>
-          {/* 검색창 */}
-          <div className="relative mb-md">
-            <Search
-              size={16}
-              className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
+      <div
+        className={`relative flex-1 min-w-0 ${
+          !isDragging
+            ? "transition-[padding-right] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+            : ""
+        }`}
+        style={{ paddingRight: !isMobile && panelOpen ? panelWidth : 0 }}
+        onClick={instantClose}
+      >
+        {/* 상단 공유 배경 영역: Hero 타이틀 + 검색/필터 툴바가 같은 배경을 공유하며, 카드 그리드 시작 직전에 canvas로 자연스럽게 사라짐 */}
+        <div className="relative overflow-hidden">
+          {hasHeroBgPc && heroBgPcSrc && (
+            <Image
+              src={heroBgPcSrc}
+              alt=""
+              fill
+              priority
+              className="hidden object-cover object-top md:block"
             />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onClick={(e) => e.stopPropagation()}
-              placeholder="제목, 업무 상황, 활용 AI, 키워드로 검색"
-              className="w-full pl-10 pr-10 py-sm bg-surface-search backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+          )}
+          {hasHeroBgMobile && heroBgMobileSrc && (
+            <Image
+              src={heroBgMobileSrc}
+              alt=""
+              fill
+              priority
+              className="object-cover md:hidden"
             />
-            {isSearching && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSearchQuery("");
-                }}
-                className="absolute right-md top-1/2 z-10 -translate-y-1/2 text-subtle hover:text-ink transition-colors duration-200"
-                aria-label="검색 초기화"
-              >
-                <X size={16} />
-              </button>
-            )}
-          </div>
+          )}
+          {hasHeroVideo && (
+            <video
+              aria-hidden="true"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={heroBgPcSrc ?? undefined}
+              className="hero-bg-video pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-top md:block motion-reduce:hidden"
+            >
+              {heroVideoWebmSrc && (
+                <source src={heroVideoWebmSrc} type="video/webm" />
+              )}
+              {heroVideoMp4Src && (
+                <source src={heroVideoMp4Src} type="video/mp4" />
+              )}
+            </video>
+          )}
+          {hasHeroBg && (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 bg-surface-dark/45"
+            />
+          )}
+          <div className="relative mx-auto max-w-7xl px-lg pt-xxl">
+            <div className="relative text-on-dark">
+              <p className="text-caption font-medium text-subtle uppercase tracking-normal mb-3">
+                V-Prompt Challenge
+              </p>
+              <h1 className="text-display-md font-semibold leading-display-md tracking-display-md">
+                수상작 갤러리
+              </h1>
+              <p className="mt-3 text-base leading-body text-subtle">
+                챌린지를 통해 선발된 {entries.length}개의 우수 프롬프트 수상작을
+                확인하세요.
+              </p>
+            </div>
+            <div className="pt-xl">
+              {/* 검색창 */}
+              <div className="relative mb-md">
+                <Search
+                  size={16}
+                  className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
+                />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  placeholder="제목, 업무 상황, 활용 AI, 키워드로 검색"
+                  className="w-full pl-10 pr-10 py-sm bg-surface-search/60 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                />
+                {isSearching && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSearchQuery("");
+                    }}
+                    className="absolute right-md top-1/2 z-10 -translate-y-1/2 text-subtle hover:text-ink transition-colors duration-200"
+                    aria-label="검색 초기화"
+                  >
+                    <X size={16} />
+                  </button>
+                )}
+              </div>
 
-          {/* 1단: 카테고리 탭 */}
-          <div className="border-b border-hairline mb-xs">
-            <HScrollRow isMobile={isMobile} className="gap-sm">
-              {CATEGORIES.map(({ value, label }) => (
-                <button
-                  key={value}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleCategoryChange(value);
-                  }}
-                  className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
-                    activeCategory === value
-                      ? "border-accent text-ink font-semibold"
-                      : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
+              {/* 1단: 카테고리 탭 */}
+              <div className="border-b border-hairline/60 mb-xs">
+                <HScrollRow isMobile={isMobile} className="gap-sm">
+                  {CATEGORIES.map(({ value, label }) => (
+                    <button
+                      key={value}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCategoryChange(value);
+                      }}
+                      className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
+                        activeCategory === value
+                          ? "border-accent text-ink font-semibold"
+                          : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </HScrollRow>
+              </div>
+
+              {/* 2단: 상세 필터 칩 */}
+              <div
+                className={`py-sm mb-lg ${
+                  isMobile
+                    ? "flex flex-col gap-xs"
+                    : "flex flex-wrap items-center gap-xs"
+                }`}
+              >
+                <HScrollRow isMobile={isMobile} className="items-center gap-xs">
+                  {/* 수상 그룹 */}
+                  <div className="flex items-center gap-2xs flex-shrink-0">
+                    {AWARD_FILTERS.map((f) => (
+                      <button
+                        key={f}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAwardFilter(f);
+                        }}
+                        className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
+                          awardFilter === f
+                            ? "bg-accent/15 text-ink border-transparent"
+                            : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                        }`}
+                      >
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+
+                  <span className="flex-shrink-0 w-px h-4 bg-hairline" />
+
+                  {/* AI 그룹 */}
+                  <div className="flex items-center gap-2xs flex-shrink-0">
+                    {AI_FILTERS.map((f) => (
+                      <button
+                        key={f}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setAiFilter(f);
+                        }}
+                        className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
+                          aiFilter === f
+                            ? "bg-accent/15 text-ink border-transparent"
+                            : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
+                        }`}
+                      >
+                        {f}
+                      </button>
+                    ))}
+                  </div>
+                </HScrollRow>
+
+                <span
+                  className={`flex-shrink-0 text-sm text-subtle whitespace-nowrap ${
+                    isMobile ? "" : "ml-auto pl-md"
                   }`}
                 >
-                  {label}
-                </button>
-              ))}
-            </HScrollRow>
-          </div>
-
-          {/* 2단: 상세 필터 칩 */}
-          <div
-            className={`py-sm mb-lg ${
-              isMobile
-                ? "flex flex-col gap-xs"
-                : "flex flex-wrap items-center gap-xs"
-            }`}
-          >
-            <HScrollRow isMobile={isMobile} className="items-center gap-xs">
-              {/* 수상 그룹 */}
-              <div className="flex items-center gap-2xs flex-shrink-0">
-                {AWARD_FILTERS.map((f) => (
-                  <button
-                    key={f}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setAwardFilter(f);
-                    }}
-                    className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
-                      awardFilter === f
-                        ? "bg-accent/15 text-ink border-transparent"
-                        : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
-                    }`}
-                  >
-                    {f}
-                  </button>
-                ))}
+                  {isSearching
+                    ? `검색 결과 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`
+                    : `총 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`}
+                </span>
               </div>
-
-              <span className="flex-shrink-0 w-px h-4 bg-hairline" />
-
-              {/* AI 그룹 */}
-              <div className="flex items-center gap-2xs flex-shrink-0">
-                {AI_FILTERS.map((f) => (
-                  <button
-                    key={f}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setAiFilter(f);
-                    }}
-                    className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
-                      aiFilter === f
-                        ? "bg-accent/15 text-ink border-transparent"
-                        : "bg-surface-card text-muted border-transparent hover:bg-surface-strong"
-                    }`}
-                  >
-                    {f}
-                  </button>
-                ))}
-              </div>
-            </HScrollRow>
-
-            <span
-              className={`flex-shrink-0 text-sm text-subtle whitespace-nowrap ${
-                isMobile ? "" : "ml-auto pl-md"
-              }`}
-            >
-              {isSearching
-                ? `검색 결과 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`
-                : `총 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`}
-            </span>
+            </div>
           </div>
+          {hasHeroBg && (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-canvas md:h-56"
+            />
+          )}
+        </div>
 
+        <div className="mx-auto max-w-7xl px-lg pb-xl">
           {/* 카드 그리드 */}
           <div className="grid gap-x-md gap-y-lg-xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {filteredEntries.length === 0 ? (
@@ -540,7 +631,7 @@ export function PromptGallery({ entries }: PromptGalleryProps) {
         )
       ) : (
         <div
-          className={`sticky top-0 h-screen flex-shrink-0 overflow-hidden bg-surface-soft ${
+          className={`fixed top-0 right-0 z-20 h-screen overflow-hidden bg-surface-soft ${
             !isDragging
               ? "transition-[width] duration-[280ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
               : ""

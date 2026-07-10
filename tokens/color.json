@@ -7,9 +7,9 @@
     "ink": { "value": "#f5f5f7", "type": "color" },
     "body": { "value": "#d4d4d8", "type": "color" },
     "muted": { "value": "#a1a1aa", "type": "color" },
-    "subtle": { "value": "#71717a", "type": "color" },
-    "canvas": { "value": "#0d0e10", "type": "color" },
-    "hairline": { "value": "#27272a", "type": "color" },
+    "subtle": { "value": "#82819e", "type": "color" },
+    "canvas": { "value": "#0e0e14", "type": "color" },
+    "hairline": { "value": "#232538", "type": "color" },
     "hairline-soft": { "value": "#1c1c1f", "type": "color" },
     "success": { "value": "#10b981", "type": "color" },
     "warning": { "value": "#f59e0b", "type": "color" },
@@ -18,10 +18,10 @@
     "selected": { "value": "#7f92b5", "type": "color" },
     "tab-default": { "value": "#ada5b9", "type": "color" },
     "surface": {
-      "soft": { "value": "#131316", "type": "color" },
-      "card": { "value": "#17171a", "type": "color" },
+      "soft": { "value": "#20202c", "type": "color" },
+      "card": { "value": "#17182a", "type": "color" },
       "strong": { "value": "#232327", "type": "color" },
-      "search": { "value": "#1e1f23", "type": "color" },
+      "search": { "value": "#242740", "type": "color" },
       "dark": { "value": "#101010", "type": "color" },
       "dark-elevated": { "value": "#1a1a1a", "type": "color" }
     },
@@ -45,27 +45,27 @@
     },
     "award": {
       "special": {
-        "bg": { "value": "#f59e0b40", "type": "color" },
+        "bg": { "value": "#f59e0b33", "type": "color" },
         "text": { "value": "#fcd34d", "type": "color" },
         "border": { "value": "#f59e0b4d", "type": "color" }
       },
       "gold": {
-        "bg": { "value": "#eab30840", "type": "color" },
+        "bg": { "value": "#eab30833", "type": "color" },
         "text": { "value": "#fde047", "type": "color" },
         "border": { "value": "#eab3084d", "type": "color" }
       },
       "silver": {
-        "bg": { "value": "#ffffff20", "type": "color" },
+        "bg": { "value": "#ffffff1a", "type": "color" },
         "text": { "value": "#e4e4e7", "type": "color" },
         "border": { "value": "#ffffff26", "type": "color" }
       },
       "bronze": {
-        "bg": { "value": "#8b5cf640", "type": "color" },
+        "bg": { "value": "#8b5cf633", "type": "color" },
         "text": { "value": "#c4b5fd", "type": "color" },
         "border": { "value": "#8b5cf64d", "type": "color" }
       },
       "commend": {
-        "bg": { "value": "#3b82f640", "type": "color" },
+        "bg": { "value": "#3b82f633", "type": "color" },
         "text": { "value": "#93c5fd", "type": "color" },
         "border": { "value": "#3b82f64d", "type": "color" }
       }
