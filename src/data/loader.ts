@@ -81,7 +81,7 @@ function mapEntry(raw: RawEntry): PromptEntry {
     resultType === "image"
       ? (previewImages[0] ?? null)
       : localAssetPath(raw.id, `result.${RESULT_EXTENSION[resultType]}`);
-  const resultFileUrl = localResultFile ?? raw.resultFileUrl ?? null;
+  const resultFileUrl = raw.resultFileUrl ?? null;
   const resultFileName = localResultFile
     ? resultType === "image"
       ? "thumbnail.png"
