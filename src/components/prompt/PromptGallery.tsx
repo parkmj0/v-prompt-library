@@ -166,6 +166,16 @@ export function PromptGallery({
   const bottomHitCountRef = useRef(0);
   const hasUserScrolledRef = useRef(false);
   const isNearBottomRef = useRef(false);
+  const heroVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    // iOS Safari는 muted 어트리뷰트만으로는 autoplay를 허용하지 않는 경우가 있어,
+    // muted 프로퍼티를 명시적으로 설정한 뒤 재생을 시도한다.
+    const video = heroVideoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play()?.catch(() => {});
+  }, [hasHeroVideo]);
 
   useEffect(() => {
     const saved = Number(localStorage.getItem("v-prompt-panel-width"));
@@ -417,11 +427,13 @@ export function PromptGallery({
               )}
               {hasHeroVideo && (
                 <video
+                  ref={heroVideoRef}
                   aria-hidden="true"
                   autoPlay
                   muted
                   loop
                   playsInline
+                  {...{ "webkit-playsinline": "true" }}
                   poster={heroBgPcSrc ?? undefined}
                   className="pointer-events-none absolute inset-0 hidden h-full w-full object-cover object-top md:block motion-reduce:hidden"
                 >
