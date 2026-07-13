@@ -18,7 +18,7 @@
     "selected": { "value": "#7f92b5", "type": "color" },
     "tab-default": { "value": "#ada5b9", "type": "color" },
     "surface": {
-      "soft": { "value": "#101025", "type": "color" },
+      "soft": { "value": "#101026", "type": "color" },
       "card": { "value": "#171c31", "type": "color" },
       "strong": { "value": "#232327", "type": "color" },
       "search": { "value": "#242740", "type": "color" },
