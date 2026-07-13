@@ -72,7 +72,7 @@ afterEach(() => {
 describe("PromptGallery", () => {
   it("entries 전체를 카드로 렌더링한다", () => {
     render(<PromptGallery entries={SAMPLE_ENTRIES} />);
-    expect(screen.getByText("총 8개 중 8개 표시")).toBeInTheDocument();
+    expect(screen.getByText("총 8개 중 8개")).toBeInTheDocument();
   });
 
   it("entries가 비어있으면 빈 상태 메시지를 보여준다", () => {
@@ -106,7 +106,7 @@ describe("PromptGallery", () => {
       (e) => e.category === "개발/자동화",
     ).length;
     expect(
-      screen.getByText(`총 ${expectedCount}개 중 ${expectedCount}개 표시`),
+      screen.getByText(`총 ${expectedCount}개 중 ${expectedCount}개`),
     ).toBeInTheDocument();
   });
 

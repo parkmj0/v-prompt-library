@@ -377,6 +377,9 @@ export function PromptGallery({
 
   const panelOpen = !!selectedId || isClosing;
   const isSearching = searchQuery.trim().length > 0;
+  const countLabel = isSearching
+    ? `검색 결과 ${filteredEntries.length}개 중 ${displayedEntries.length}개`
+    : `총 ${filteredEntries.length}개 중 ${displayedEntries.length}개`;
 
   return (
     <div className="relative z-10 flex items-start">
@@ -479,7 +482,7 @@ export function PromptGallery({
               </div>
 
               {/* 추천 검색어 태그 */}
-              <div className="mb-md flex flex-wrap items-center justify-center gap-x-md gap-y-2xs sm:gap-y-md">
+              <div className="mb-md flex flex-wrap items-center justify-center gap-x-md gap-y-xxs sm:gap-y-md">
                 {RECOMMENDED_SEARCH_TAGS.map((tag) => (
                   <button
                     key={tag}
@@ -570,20 +573,21 @@ export function PromptGallery({
                   </div>
                 </HScrollRow>
 
-                <span
-                  className={`flex-shrink-0 text-sm text-subtle whitespace-nowrap ${
-                    isMobile ? "" : "ml-auto pl-md"
-                  }`}
-                >
-                  {isSearching
-                    ? `검색 결과 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`
-                    : `총 ${filteredEntries.length}개 중 ${displayedEntries.length}개 표시`}
-                </span>
+                {!isMobile && (
+                  <span className="flex-shrink-0 text-sm text-subtle whitespace-nowrap ml-auto pl-md">
+                    {countLabel}
+                  </span>
+                )}
               </div>
             </div>
           </div>
 
           <div className="relative mx-auto max-w-7xl px-lg pb-xl">
+            {isMobile && (
+              <p className="mb-xs text-sm text-subtle whitespace-nowrap">
+                {countLabel}
+              </p>
+            )}
             {/* 카드 그리드 */}
             <div className="grid gap-x-md gap-y-lg-xl grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {filteredEntries.length === 0 ? (
