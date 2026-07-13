@@ -156,7 +156,7 @@ export function PromptGallery({
   const [awardFilter, setAwardFilter] = useState("수상 전체");
   const [aiFilter, setAiFilter] = useState("AI 전체");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
-  const [panelWidth, setPanelWidth] = useState(760);
+  const [panelWidth, setPanelWidth] = useState(740);
   const [isDragging, setIsDragging] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
