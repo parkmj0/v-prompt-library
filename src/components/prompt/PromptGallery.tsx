@@ -19,6 +19,17 @@ const CATEGORIES: { value: string; label: string }[] = [
 const AWARD_FILTERS = ["수상 전체", "Best", "참신상", "운영특별상"];
 const AI_FILTERS = ["AI 전체", "ChatGPT", "Claude", "Gemini"];
 
+const RECOMMENDED_SEARCH_TAGS = [
+  "핵심 개념",
+  "쌍둥이 문항",
+  "문항 검토",
+  "교과 영상",
+  "학습 독려",
+  "디지털 학습지",
+  "리서치 자동화",
+  "교수자료 기획",
+];
+
 const AWARD_SORT: Record<string, number> = {
   대상: 0,
   Best: 1,
@@ -201,11 +212,16 @@ export function PromptGallery({
   }, []);
 
   // 검색어 기준 필터링 (카테고리·상세 필터 무관)
+  // 검색어를 공백 기준으로 나눠, 단어 중 하나라도 포함되면 노출한다 (OR 매칭).
   const searchFiltered = useMemo(() => {
-    const q = searchQuery.trim().toLowerCase();
-    if (!q) return entries;
-    return entries.filter((e) =>
-      [
+    const tokens = searchQuery
+      .trim()
+      .toLowerCase()
+      .split(/\s+/)
+      .filter(Boolean);
+    if (tokens.length === 0) return entries;
+    return entries.filter((e) => {
+      const haystack = [
         e.title,
         e.promptSummary,
         e.category,
@@ -215,9 +231,9 @@ export function PromptGallery({
         e.promptText,
       ]
         .join(" ")
-        .toLowerCase()
-        .includes(q),
-    );
+        .toLowerCase();
+      return tokens.some((token) => haystack.includes(token));
+    });
   }, [entries, searchQuery]);
 
   // 5개 조건 AND 필터 + 정렬 (추천작 상단)
@@ -355,6 +371,10 @@ export function PromptGallery({
     instantClose();
   }
 
+  function handleRecommendedTagClick(tag: string) {
+    setSearchQuery(tag);
+  }
+
   const panelOpen = !!selectedId || isClosing;
   const isSearching = searchQuery.trim().length > 0;
 
@@ -431,7 +451,7 @@ export function PromptGallery({
             </div>
             <div className="pt-xl">
               {/* 검색창 */}
-              <div className="relative mb-md">
+              <div className="relative mb-sm">
                 <Search
                   size={16}
                   className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
@@ -456,6 +476,24 @@ export function PromptGallery({
                     <X size={16} />
                   </button>
                 )}
+              </div>
+
+              {/* 추천 검색어 태그 */}
+              <div className="mb-md flex flex-wrap items-center justify-center gap-md">
+                {RECOMMENDED_SEARCH_TAGS.map((tag) => (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleRecommendedTagClick(tag);
+                    }}
+                    aria-label={`${tag} 검색하기`}
+                    className="text-caption text-subtle underline underline-offset-4 decoration-transparent transition-colors duration-200 hover:text-on-dark hover:decoration-on-dark focus-visible:text-on-dark focus-visible:decoration-on-dark focus-visible:outline-none"
+                  >
+                    #{tag}
+                  </button>
+                ))}
               </div>
 
               {/* 1단: 카테고리 탭 */}

@@ -221,7 +221,7 @@ export function PromptDetailPanel({
           )}
 
           {entry.tags.length > 0 && (
-            <PropRow label="태그">
+            <PropRow label="추천 키워드">
               <div className="flex flex-wrap gap-1">
                 {entry.tags.map((tag) => (
                   <span
