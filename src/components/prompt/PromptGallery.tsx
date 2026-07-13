@@ -262,7 +262,7 @@ const RECOMMENDED_SEARCH_TAG_POOL: RecommendedSearchTag[] = [
   },
 ];
 
-const RECOMMENDED_TAG_VISIBLE_COUNT = 8;
+const RECOMMENDED_TAG_VISIBLE_COUNT = 7;
 
 const AWARD_SORT: Record<string, number> = {
   대상: 0,
