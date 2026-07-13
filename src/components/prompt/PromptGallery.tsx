@@ -479,7 +479,7 @@ export function PromptGallery({
               </div>
 
               {/* 추천 검색어 태그 */}
-              <div className="mb-md flex flex-wrap items-center justify-center gap-md">
+              <div className="mb-md flex flex-wrap items-center justify-center gap-x-md gap-y-2xs sm:gap-y-md">
                 {RECOMMENDED_SEARCH_TAGS.map((tag) => (
                   <button
                     key={tag}
