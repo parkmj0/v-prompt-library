@@ -99,7 +99,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
         e.stopPropagation();
         onClick();
       }}
-      className={`group cursor-pointer rounded-lg border bg-surface-card flex flex-col overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover ${
+      className={`group cursor-pointer rounded-[18px] border bg-surface-card flex flex-col overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-card-hover ${
         isSelected ? "border-selected shadow-glow-accent" : "border-transparent"
       }`}
     >
