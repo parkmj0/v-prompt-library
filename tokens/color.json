@@ -74,9 +74,9 @@
       }
     },
     "tool": {
-      "bg": { "value": "#8b5cf61f", "type": "color" },
+      "bg": { "value": "#8b5cf640", "type": "color" },
       "text": { "value": "#c4b5fd", "type": "color" },
-      "border": { "value": "#8b5cf640", "type": "color" }
+      "border": { "value": "#8b5cf680", "type": "color" }
     },
     "reuse": {
       "bg": { "value": "#34d3991f", "type": "color" },

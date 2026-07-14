@@ -59,7 +59,7 @@ function RepeatBadge({ repeatType }: { repeatType: string }) {
 
   return (
     <div className="flex items-center gap-xs">
-      <span className="text-caption text-subtle font-medium whitespace-nowrap">
+      <span className="text-caption text-muted font-medium whitespace-nowrap">
         업무 사용 반복성
       </span>
       <StarRating filled={filled} size={12} />
@@ -72,7 +72,7 @@ function CrossUsageBadge({ usage }: { usage: string }) {
 
   return (
     <div className="flex items-center gap-xs">
-      <span className="text-caption text-subtle font-medium whitespace-nowrap">
+      <span className="text-caption text-muted font-medium whitespace-nowrap">
         동일 업무 활용 가능성
       </span>
       <StarRating filled={filled} size={12} />
@@ -144,9 +144,9 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
       <div className="p-md flex flex-col gap-2 flex-1">
         {/* 메타: 카테고리 · 난이도 */}
         <div className="flex items-center gap-xs flex-wrap">
-          <span className="text-xs text-subtle">{entry.category}</span>
+          <span className="text-xs text-muted">{entry.category}</span>
           {entry.repeatType && (
-            <span className="inline-flex items-center gap-[calc(var(--spacing-xxs)/2)] text-xs text-subtle">
+            <span className="inline-flex items-center gap-[calc(var(--spacing-xxs)/2)] text-xs text-muted">
               <span
                 className={`h-[var(--spacing-2xs)] w-[var(--spacing-2xs)] rounded-pill flex-shrink-0 ${
                   REPEAT_TYPE_DOT[entry.repeatType] ?? "bg-subtle"
@@ -189,7 +189,7 @@ export function PromptCard({ entry, isSelected, onClick }: PromptCardProps) {
           <div className="flex items-center justify-between gap-xs">
             <RepeatBadge repeatType={entry.repeatType} />
             {entry.cell && (
-              <span className="text-xs text-subtle truncate shrink-0">
+              <span className="text-xs text-muted truncate shrink-0">
                 {entry.cell}
               </span>
             )}

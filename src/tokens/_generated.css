@@ -102,9 +102,9 @@
   --color-award-commend-bg: rgba(59, 130, 246, 0.6);
   --color-award-commend-text: #bfdbfe;
   --color-award-commend-border: rgba(59, 130, 246, 0.3);
-  --color-tool-bg: rgba(139, 92, 246, 0.12);
+  --color-tool-bg: rgba(139, 92, 246, 0.25);
   --color-tool-text: #c4b5fd;
-  --color-tool-border: rgba(139, 92, 246, 0.25);
+  --color-tool-border: rgba(139, 92, 246, 0.5);
   --color-reuse-bg: rgba(52, 211, 153, 0.12);
   --color-reuse-text: #6ee7b7;
   --color-pack-bg: rgba(245, 158, 11, 0.12);

@@ -54,7 +54,7 @@ function createPromptPreview(prompt?: string, ratio = 0.8) {
 
 function PropRow({
   label,
-  labelClassName = "text-subtle",
+  labelClassName = "text-muted",
   children,
 }: {
   label: string;
@@ -151,7 +151,7 @@ export function PromptDetailPanel({
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center gap-xs">
             <meta.Icon size={28} className="text-on-dark/60" />
-            <span className="text-xs text-subtle text-center px-sm leading-snug">
+            <span className="text-xs text-muted text-center px-sm leading-snug">
               결과물 미리보기
             </span>
           </div>
@@ -214,7 +214,7 @@ export function PromptDetailPanel({
 
         {/* 한 줄 요약 */}
         {entry.promptSummary && (
-          <p className="-mt-xxs text-sm text-subtle leading-body">
+          <p className="-mt-xxs text-sm text-muted leading-body">
             {entry.promptSummary}
           </p>
         )}
@@ -264,7 +264,7 @@ export function PromptDetailPanel({
 
       {/* ── 활용지표 ─────────────────────────────────── */}
       <div className="px-lg py-md border-b border-subtle/40 flex flex-col gap-sm">
-        <p className="text-caption font-semibold text-subtle uppercase tracking-normal">
+        <p className="text-caption font-semibold text-muted uppercase tracking-normal">
           활용지표
         </p>
         <div className="flex flex-col gap-xs">
@@ -311,7 +311,7 @@ export function PromptDetailPanel({
       <div className="px-lg py-md pb-lg flex flex-col gap-md border-b border-subtle/40">
         {entry.resultFileUrl && (
           <div>
-            <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
+            <p className="text-caption font-semibold text-muted uppercase tracking-normal mb-xxs">
               최종 결과물 보기
             </p>
             <a
@@ -328,7 +328,7 @@ export function PromptDetailPanel({
         )}
 
         <div>
-          <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-sm">
+          <p className="text-caption font-semibold text-muted uppercase tracking-normal mb-sm">
             Prompt 미리보기
           </p>
           <div className="group relative">
