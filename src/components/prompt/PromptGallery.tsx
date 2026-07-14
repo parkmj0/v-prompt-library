@@ -767,7 +767,7 @@ export function PromptGallery({
                   }}
                   onClick={(e) => e.stopPropagation()}
                   placeholder="내 업무에 바로 쓸 Prompt를 검색해보세요"
-                  className="w-full h-[50px] pl-10 pr-10 py-sm bg-surface-search/80 border border-transparent rounded-md text-sm font-medium text-on-dark placeholder:text-body focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                  className="w-full h-[48px] pl-10 pr-10 py-sm bg-surface-search/80 border border-transparent rounded-md text-sm font-medium text-on-dark placeholder:text-body focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-10 right-10 z-10 flex items-center overflow-hidden">
                   <span
