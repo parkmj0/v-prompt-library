@@ -646,6 +646,11 @@ export function PromptGallery({
 
   function handleCategoryChange(cat: string) {
     setActiveCategory(cat);
+    if (cat === "전체") {
+      setAwardFilter("수상 전체");
+      setAwardFilterTouched(false);
+      setAiFilter("AI 전체");
+    }
     instantClose();
   }
 
