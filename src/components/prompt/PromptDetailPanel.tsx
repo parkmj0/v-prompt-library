@@ -175,7 +175,7 @@ export function PromptDetailPanel({
       </div>
 
       {/* ── 상단 요약 ─────────────────────────────────── */}
-      <div className="px-lg pt-lg pb-lg border-b border-hairline flex flex-col gap-sm">
+      <div className="px-lg pt-lg pb-lg border-b border-subtle/40 flex flex-col gap-sm">
         {/* 배지 */}
         <div className="flex flex-wrap gap-1">
           {entry.award !== "추천작" && (
@@ -242,7 +242,7 @@ export function PromptDetailPanel({
       </div>
 
       {/* ── 활용지표 ─────────────────────────────────── */}
-      <div className="px-lg py-md border-b border-hairline flex flex-col gap-sm">
+      <div className="px-lg py-md border-b border-subtle/40 flex flex-col gap-sm">
         <p className="text-caption font-semibold text-subtle uppercase tracking-normal">
           활용지표
         </p>
@@ -287,7 +287,7 @@ export function PromptDetailPanel({
       </div>
 
       {/* ── 최종 결과물 보기 + 제출 Prompt + 활용 방법 ── */}
-      <div className="px-lg py-md pb-lg flex flex-col gap-md border-b border-hairline">
+      <div className="px-lg py-md pb-lg flex flex-col gap-md border-b border-subtle/40">
         {entry.resultFileUrl && (
           <div>
             <p className="text-caption font-semibold text-subtle uppercase tracking-normal mb-xxs">
