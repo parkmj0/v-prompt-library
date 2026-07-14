@@ -319,7 +319,7 @@ export function PromptDetailPanel({
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-xxs text-sm text-accent hover:underline min-w-0"
+              className="flex items-center gap-xxs text-sm text-accent/80 hover:underline min-w-0"
             >
               <span className="truncate">{entry.resultFileUrl}</span>
               <ExternalLink size={14} className="shrink-0" />
