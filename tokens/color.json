@@ -14,7 +14,7 @@
     "success": { "value": "#10b981", "type": "color" },
     "warning": { "value": "#f59e0b", "type": "color" },
     "error": { "value": "#ef4444", "type": "color" },
-    "accent": { "value": "#4f8bf0", "type": "color" },
+    "accent": { "value": "#286efa", "type": "color" },
     "selected": { "value": "#7f92b5", "type": "color" },
     "tab-default": { "value": "#ada5b9", "type": "color" },
     "surface": {
