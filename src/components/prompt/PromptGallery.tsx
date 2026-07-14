@@ -713,7 +713,7 @@ export function PromptGallery({
             </div>
             <div className="pt-xl">
               {/* 검색창 */}
-              <div className="relative mb-xs max-w-full sm:max-w-[65%] mx-auto">
+              <div className="relative mb-xs max-w-full lg:max-w-[65%] mx-auto">
                 <Search
                   size={16}
                   className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
@@ -753,7 +753,7 @@ export function PromptGallery({
               </div>
 
               {/* 추천 검색어 태그 */}
-              <div className="mb-lg flex flex-wrap items-center justify-center gap-x-md gap-y-0 sm:gap-y-md">
+              <div className="mb-lg flex flex-wrap items-center justify-center gap-x-md gap-y-0 sm:gap-y-xxs">
                 {recommendedSearchTags.map((tag) => (
                   <button
                     key={tag.label}
