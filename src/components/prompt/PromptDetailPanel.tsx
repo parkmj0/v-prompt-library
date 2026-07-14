@@ -123,7 +123,7 @@ export function PromptDetailPanel({
           <button
             onClick={onClose}
             aria-label="패널 닫기"
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-canvas/60 backdrop-blur-sm border border-hairline-soft text-on-dark hover:bg-canvas/80 hover:text-on-dark transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+            className="w-8 h-8 flex items-center justify-center rounded-full bg-canvas/60 backdrop-blur-sm border border-subtle/40 text-on-dark hover:bg-canvas/80 hover:text-on-dark transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
           >
             <X size={16} />
           </button>
