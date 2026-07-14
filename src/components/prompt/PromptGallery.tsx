@@ -273,6 +273,7 @@ const AWARD_SORT: Record<string, number> = {
 
 const INITIAL_VISIBLE_COUNT = 24;
 const LOAD_MORE_COUNT = 12;
+const FULL_DISPLAY_THRESHOLD = 50;
 const AUTO_LOAD_TRIGGER_COUNT = 2;
 
 interface PromptGalleryProps {
@@ -512,7 +513,11 @@ export function PromptGallery({
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   if (prevFilterKey !== filterKey) {
     setPrevFilterKey(filterKey);
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    setVisibleCount(
+      filteredEntries.length <= FULL_DISPLAY_THRESHOLD
+        ? filteredEntries.length
+        : INITIAL_VISIBLE_COUNT,
+    );
   }
 
   // 필터가 바뀌면 하단 감지 카운트 및 자동 로드 가드도 함께 초기화한다.
