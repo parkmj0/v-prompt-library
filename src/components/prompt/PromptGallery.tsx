@@ -841,7 +841,7 @@ export function PromptGallery({
                         className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
                           awardFilter === f
                             ? "bg-accent text-on-dark border-transparent"
-                            : "bg-surface-filter/70 text-ink border-transparent hover:bg-surface-strong"
+                            : "bg-surface-filter text-ink border-transparent hover:bg-surface-strong"
                         }`}
                       >
                         {f}
@@ -863,7 +863,7 @@ export function PromptGallery({
                         className={`flex-shrink-0 h-xl flex items-center justify-center px-sm rounded-pill border text-xs font-medium whitespace-nowrap transition-colors duration-200 ${
                           aiFilter === f
                             ? "bg-accent text-on-dark border-transparent"
-                            : "bg-surface-filter/70 text-ink border-transparent hover:bg-surface-strong"
+                            : "bg-surface-filter text-ink border-transparent hover:bg-surface-strong"
                         }`}
                       >
                         {f}
