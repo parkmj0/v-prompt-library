@@ -8,7 +8,7 @@
     "body": { "value": "#d4d4d8", "type": "color" },
     "muted": { "value": "#a1a1aa", "type": "color" },
     "subtle": { "value": "#82819e", "type": "color" },
-    "canvas": { "value": "#080918", "type": "color" },
+    "canvas": { "value": "#141525", "type": "color" },
     "hairline": { "value": "#282d3a", "type": "color" },
     "hairline-soft": { "value": "#1c1c1f", "type": "color" },
     "success": { "value": "#10b981", "type": "color" },

@@ -654,6 +654,13 @@ export function PromptGallery({
     instantClose();
   }
 
+  function handleHomeClick() {
+    setSearchQuery("");
+    setActiveSearchTerms([]);
+    handleCategoryChange("전체");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   function handleRecommendedTagClick(tag: RecommendedSearchTag) {
     setSearchQuery(tag.label);
     setActiveSearchTerms(tag.aliases);
@@ -730,7 +737,13 @@ export function PromptGallery({
               <p className="text-caption font-medium text-subtle uppercase tracking-normal mb-3">
                 V-Prompt Challenge
               </p>
-              <h1 className="text-display-md font-semibold leading-display-md tracking-display-md">
+              <h1
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleHomeClick();
+                }}
+                className="text-display-md font-semibold leading-display-md tracking-display-md cursor-pointer"
+              >
                 수상작 갤러리
               </h1>
               <p className="mt-3 text-base leading-body text-subtle">
