@@ -753,7 +753,7 @@ export function PromptGallery({
             </div>
             <div className="pt-xl">
               {/* 검색창 */}
-              <div className="relative mb-xs max-w-full lg:max-w-3xl mx-auto">
+              <div className="relative mb-xs max-w-full lg:max-w-2xl mx-auto">
                 <Search
                   size={16}
                   className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
@@ -767,7 +767,7 @@ export function PromptGallery({
                   }}
                   onClick={(e) => e.stopPropagation()}
                   placeholder="내 업무에 바로 쓸 Prompt를 검색해보세요"
-                  className="w-full h-[50px] pl-10 pr-10 py-sm bg-surface-search border border-transparent rounded-md text-sm text-ink placeholder:text-muted focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                  className="w-full h-[50px] pl-10 pr-10 py-sm bg-surface-search/80 border border-transparent rounded-md text-sm font-medium text-on-dark placeholder:text-muted focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-10 right-10 z-10 flex items-center overflow-hidden">
                   <span
@@ -803,7 +803,7 @@ export function PromptGallery({
                       handleRecommendedTagClick(tag);
                     }}
                     aria-label={`${tag.label} 검색하기`}
-                    className="text-caption text-subtle underline underline-offset-4 decoration-transparent transition-colors duration-200 hover:text-on-dark hover:decoration-on-dark focus-visible:text-on-dark focus-visible:decoration-on-dark focus-visible:outline-none"
+                    className="text-caption text-muted underline underline-offset-4 decoration-transparent transition-colors duration-200 hover:text-on-dark hover:decoration-on-dark focus-visible:text-on-dark focus-visible:decoration-on-dark focus-visible:outline-none"
                   >
                     #{tag.label}
                   </button>
@@ -820,7 +820,7 @@ export function PromptGallery({
                         e.stopPropagation();
                         handleCategoryChange(value);
                       }}
-                      className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
+                      className={`flex-shrink-0 px-md py-sm text-base font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
                         activeCategory === value
                           ? "border-accent text-on-dark font-semibold"
                           : "border-transparent text-tab-default hover:text-muted hover:border-subtle/40"
