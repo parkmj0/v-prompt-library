@@ -960,9 +960,9 @@ export function PromptGallery({
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           aria-label="맨 위로 이동"
-          className="fixed bottom-xl right-xl z-30 flex items-center justify-center w-xl h-xl rounded-full border border-hairline bg-surface-card text-muted hover:bg-surface-strong hover:border-accent/60 transition-colors duration-200"
+          className="fixed bottom-xl right-xl z-30 flex items-center justify-center w-[42px] h-[42px] rounded-full border border-hairline bg-surface-card text-muted hover:bg-surface-strong hover:border-accent/60 transition-colors duration-200"
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={20} />
         </button>
       )}
 
