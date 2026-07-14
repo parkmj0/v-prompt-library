@@ -485,6 +485,7 @@ export function PromptGallery({
         e.aiTools.join(" "),
         e.usage,
         e.promptText,
+        e.cell,
       ]
         .join(" ")
         .toLowerCase();
