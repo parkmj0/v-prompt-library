@@ -713,7 +713,7 @@ export function PromptGallery({
             </div>
             <div className="pt-xl">
               {/* 검색창 */}
-              <div className="relative mb-sm">
+              <div className="relative mb-xs max-w-full sm:max-w-[65%] mx-auto">
                 <Search
                   size={16}
                   className="absolute left-md top-1/2 z-10 -translate-y-1/2 text-on-dark pointer-events-none"
@@ -727,7 +727,7 @@ export function PromptGallery({
                   }}
                   onClick={(e) => e.stopPropagation()}
                   placeholder="내 업무에 바로 쓸 Prompt를 검색해보세요"
-                  className="w-full pl-10 pr-10 py-sm bg-surface-search/60 backdrop-blur-md border border-transparent rounded-md text-sm text-ink placeholder:text-subtle focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
+                  className="w-full h-[50px] pl-10 pr-10 py-sm bg-surface-search border border-transparent rounded-md text-sm text-ink placeholder:text-muted focus:outline-none focus:border-accent/60 focus:ring-2 focus:ring-accent/15 transition-colors duration-200"
                 />
                 <div className="pointer-events-none absolute inset-y-0 left-10 right-10 z-10 flex items-center overflow-hidden">
                   <span
@@ -753,7 +753,7 @@ export function PromptGallery({
               </div>
 
               {/* 추천 검색어 태그 */}
-              <div className="mb-md flex flex-wrap items-center justify-center gap-x-md gap-y-xxs sm:gap-y-md">
+              <div className="mb-lg flex flex-wrap items-center justify-center gap-x-md gap-y-0 sm:gap-y-md">
                 {recommendedSearchTags.map((tag) => (
                   <button
                     key={tag.label}
@@ -771,7 +771,7 @@ export function PromptGallery({
               </div>
 
               {/* 1단: 카테고리 탭 */}
-              <div className="border-b border-hairline mb-xs">
+              <div className="border-b border-subtle/50 mb-xs">
                 <HScrollRow isMobile={isMobile} className="gap-sm">
                   {CATEGORIES.map(({ value, label }) => (
                     <button
@@ -783,7 +783,7 @@ export function PromptGallery({
                       className={`flex-shrink-0 px-md py-sm text-sm font-medium whitespace-nowrap border-b-2 transition-colors duration-200 -mb-px ${
                         activeCategory === value
                           ? "border-accent text-on-dark font-semibold"
-                          : "border-transparent text-tab-default hover:text-muted hover:border-hairline"
+                          : "border-transparent text-tab-default hover:text-muted hover:border-subtle/50"
                       }`}
                     >
                       {label}
