@@ -574,24 +574,26 @@ export function PromptGallery({
   // 추천 태그 클릭 시엔 activeSearchTerms(대표 키워드+aliases)를 OR 매칭하고,
   // 수동 입력 시엔 검색어를 공백 기준으로 나눠 단어 중 하나라도 포함되면 노출한다 (OR 매칭).
   const searchFiltered = useMemo(() => {
-    const tokens =
-      activeSearchTerms.length > 0
-        ? activeSearchTerms.map((term) => term.toLowerCase())
-        : searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const isTagSearch = activeSearchTerms.length > 0;
+    const tokens = isTagSearch
+      ? activeSearchTerms.map((term) => term.toLowerCase())
+      : searchQuery.trim().toLowerCase().split(/\s+/).filter(Boolean);
     if (tokens.length === 0) return entries;
     return entries.filter((e) => {
-      const haystack = [
+      const fields = [
         e.title,
         e.promptSummary,
         e.category,
         e.core,
         e.aiTools.join(" "),
         e.usage,
-        e.promptText,
         e.cell,
-      ]
-        .join(" ")
-        .toLowerCase();
+      ];
+      // 추천 태그 클릭 검색은 프롬프트 본문 전체(promptText)를 매칭 대상에서 빼서
+      // 본문에 우연히 등장하는 단어 때문에 무관한 카드가 섞이는 것을 막는다.
+      // 수동 검색창 입력은 기존대로 본문까지 포함해 넓게 매칭한다.
+      if (!isTagSearch) fields.push(e.promptText);
+      const haystack = fields.join(" ").toLowerCase();
       return tokens.some((token) => haystack.includes(token));
     });
   }, [entries, searchQuery, activeSearchTerms]);
