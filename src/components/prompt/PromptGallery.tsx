@@ -148,19 +148,6 @@ const RECOMMENDED_SEARCH_TAG_POOL: RecommendedSearchTag[] = [
     ],
   },
   {
-    label: "보안성 검토 체크리스트",
-    aliases: [
-      "보안성 검토 체크리스트",
-      "보안성 검토",
-      "보안 체크리스트",
-      "정보보안",
-      "개인정보",
-      "권한 검토",
-      "보안 이슈",
-      "검토 기준",
-    ],
-  },
-  {
     label: "CS 자동 스크립트",
     aliases: [
       "CS 자동 스크립트",
@@ -315,22 +302,6 @@ const ADDITIONAL_RECOMMENDED_SEARCH_TAGS: RecommendedSearchTag[] = [
       "문장 하이라이트",
       "학습 콘텐츠",
       "디지털 콘텐츠",
-    ],
-  },
-  {
-    label: "교과 연계 자료",
-    aliases: [
-      "교과 연계 자료",
-      "교과 연계",
-      "교과 영상",
-      "유튜브 영상",
-      "영상 탐색",
-      "수업 영상",
-      "수업 자료",
-      "교과서 자료",
-      "영상 자료 조사",
-      "디지털 시민",
-      "세계 시민",
     ],
   },
   {
