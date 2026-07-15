@@ -235,6 +235,8 @@ const RECOMMENDED_SEARCH_TAG_POOL: RecommendedSearchTag[] = [
       "랜딩페이지 이미지",
       "사내 안내",
       "이미지 생성",
+      "정보시스템",
+      "내부 커뮤니케이션",
     ],
   },
   {
@@ -262,6 +264,113 @@ const RECOMMENDED_SEARCH_TAG_POOL: RecommendedSearchTag[] = [
       "프롬프트 개선",
     ],
   },
+];
+
+// 신규 추가 추천 검색어 (기존 RECOMMENDED_SEARCH_TAG_POOL은 그대로 두고 뒤에 병합한다)
+const ADDITIONAL_RECOMMENDED_SEARCH_TAGS: RecommendedSearchTag[] = [
+  {
+    label: "개념 설명",
+    aliases: [
+      "개념 설명",
+      "핵심 개념",
+      "개념 정리",
+      "난해 개념",
+      "학습 개념",
+      "개념 설계",
+      "개념 정확성",
+      "개념 정확성 검토",
+      "단원별 학습",
+      "학습 로드맵",
+      "교육 콘텐츠",
+    ],
+  },
+  {
+    label: "쌍둥이 문항",
+    aliases: [
+      "쌍둥이 문항",
+      "문항 자동 생성",
+      "문항 생성",
+      "문항 제작",
+      "원형 문항",
+      "유사 문항",
+      "문제 생성",
+      "평가지",
+      "문항은행",
+      "초등 수학",
+    ],
+  },
+  {
+    label: "교수자료 기획",
+    aliases: [
+      "교수자료 기획",
+      "교수학습자료",
+      "교사용 자료",
+      "채점 루브릭",
+      "평가 기준표",
+      "수업 자료",
+      "교육 콘텐츠",
+      "학습자료",
+      "수업안",
+      "교재 개발",
+    ],
+  },
+  {
+    label: "디지털 교재",
+    aliases: [
+      "디지털 교재",
+      "디지털 학습지",
+      "스마트 교과서",
+      "전자책",
+      "교사용 자료",
+      "타임코드",
+      "음원 연동",
+      "문장 하이라이트",
+      "학습 콘텐츠",
+      "디지털 콘텐츠",
+    ],
+  },
+  {
+    label: "교과 연계 자료",
+    aliases: [
+      "교과 연계 자료",
+      "교과 연계",
+      "교과 영상",
+      "유튜브 영상",
+      "영상 탐색",
+      "수업 영상",
+      "수업 자료",
+      "교과서 자료",
+      "영상 자료 조사",
+      "디지털 시민",
+      "세계 시민",
+    ],
+  },
+  {
+    label: "학습 피드백",
+    aliases: [
+      "학습 피드백",
+      "맞춤형 피드백",
+      "강사 피드백",
+      "수업 피드백",
+      "교육 과정 피드백",
+      "학습 독려",
+      "진도 저조자",
+      "코칭",
+      "강사 양성",
+      "교사 교육",
+    ],
+  },
+];
+
+// label 기준 중복만 제거해 기존 pool 뒤에 신규 항목을 병합한다 (aliases 중복은 허용).
+const MERGED_RECOMMENDED_SEARCH_TAG_POOL: RecommendedSearchTag[] = [
+  ...RECOMMENDED_SEARCH_TAG_POOL,
+  ...ADDITIONAL_RECOMMENDED_SEARCH_TAGS.filter(
+    (additionalTag) =>
+      !RECOMMENDED_SEARCH_TAG_POOL.some(
+        (existingTag) => existingTag.label === additionalTag.label,
+      ),
+  ),
 ];
 
 const RECOMMENDED_TAG_VISIBLE_COUNT = 6;
@@ -438,7 +547,7 @@ export function PromptGallery({
 
   useEffect(() => {
     // 서버/클라이언트 hydration mismatch를 피하기 위해 마운트 후에만 랜덤 구성한다.
-    const shuffled = [...RECOMMENDED_SEARCH_TAG_POOL].sort(
+    const shuffled = [...MERGED_RECOMMENDED_SEARCH_TAG_POOL].sort(
       () => Math.random() - 0.5,
     );
     setRecommendedSearchTags(shuffled.slice(0, RECOMMENDED_TAG_VISIBLE_COUNT));
